@@ -1,0 +1,168 @@
+.social-icons i{
+    font-size: 22px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.social-icons i:hover {
+    transform: scale(1.2);
+    color: #3CB815; /* Change this to the hover color you like */
+  }
+.social-icons span {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+/* navbar */
+#navbar.scrolled {
+    background-color: white !important; /* Change to any color you want */
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional shadow */
+  }
+  
+.navbar-brand{ 
+    font-size: 2rem;
+    font-weight: 900;
+    color: #F65005;   
+}
+.navbar-brand span{
+    color: #3CB815;
+}
+.navbar-nav a{
+    color: #5D5D5E;
+    font-size: 18px;
+    font-weight: 500;
+}
+.navbar-nav .nav-link:hover {
+    color: #3CB815 !important;
+  }
+  
+.nav-icons  i{
+    font-size: 18px;
+}
+.nav-icons span {
+    color:#565656;
+    display: inline-block;   /* Ensures width/height work */
+    width: 35px;              /* Set fixed width */
+    height: 35px;             /* Set equal height */
+    border: 1px solid #FFFFFF;
+    background-color: #FFFFFF;
+    border-radius: 50%;       /* Perfect circle */
+    padding: 0;               /* Optional: remove padding */
+    text-align: center;       /* Center icon/text horizontally */
+    line-height: 35px;        /* Center icon/text vertically */
+  }
+  /* owl-carousel */
+  .owl-carousel .item img {
+    width: 100%;
+    height: 600px; /* keeps aspect ratio */
+    display: block; /* removes unwanted spacing */
+    
+  }
+  .owl-carousel .owl-nav {
+    position: absolute;
+    top: 50%;
+    width: 95%;
+    left: 30px;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 10; /* Ensures it shows above carousel content */
+  }
+  
+  .owl-carousel .owl-nav button.owl-prev,
+  .owl-carousel .owl-nav button.owl-next {
+    background-color: rgba(60, 184, 21, 0.3); /* semi-transparent green */
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 20px; /* adjusted icon size */
+    font-weight: 300; /* thinner icon */
+    display: inline-flex; /* helps with vertical centering */
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    pointer-events: all;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    vertical-align: middle;
+  }
+ 
+  
+  .owl-carousel .owl-nav button.owl-prev:hover,
+ .owl-carousel .owl-nav button.owl-next:hover {
+  background-color: #2b980f !important;
+  color: #fff;
+}
+/* carousel -content */
+.item{
+ position: relative;
+}
+.item .content{
+     position: absolute;
+     width: 700px;
+     bottom: 180px;
+     left: 120px;
+       
+}
+.item h1{
+     font-size: 5rem;
+     font-family: "Lora", serif;
+     font-weight: 700 ;
+}
+.content .b-1{
+    font-size: 1.3rem;
+    padding: 10px 40px;
+    border: 1px solid #2b980f;
+    border-radius: 50px;
+    background-color: #2b980f;
+    color: #fff;
+}
+.content .b-2{
+    font-size: 1.3rem;
+    padding: 10px 40px;
+    border: 1px solid #F65005;
+    border-radius: 50px;
+    background-color: #F65005;
+    color: #fff;
+}
+.content-button{
+    display: flex;
+    gap: 30px;
+    margin-top: 50px;
+
+}
+/* about section */
+.heading{
+  font-family: "Lora", serif;
+  font-size: 48px;
+  font-weight: 900;
+  margin-bottom: 30px;
+}
+.para{
+  font-size: 16px;
+  font-weight: 500;
+  width: 80%;
+  margin-bottom: 20px;
+}
+.list li{
+  font-size: 16px;
+  font-weight: 500;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+.list .material-symbols-outlined{
+  color: #3CB815;
+  font-size: 36px;
+  
+ 
+  
+}
+  
+  
+  
