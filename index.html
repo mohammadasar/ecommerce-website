@@ -23,13 +23,14 @@
     <div class="container-fluid " style="background-color: #E1E4EB;">
         <!-- nav-start -->
         <div class="row py-2 border-bottom"  style="border-color: #808183;">
-            <div class="col-6 d-flex  gap-4 px-5 text-start">
+            <div class="col-6 d-flex  gap-4 px-5 text-start location">
                 <span class=" d-flex justify-content-center">
-                    <span class="material-icons  me-2">location_on</span>
+                    <i class='bx bxs-map'></i>
                     123 Street, New York, USA </span>
                 <span  class=" d-flex justify-content-center">
-                    <span class="material-icons me-2">mail</span>
-                        info@example.com</span>
+                    <i class='bx bx-envelope'></i>
+                         info@example.com</span>
+
             </div>
             <div class="col-6 d-flex gap-3 px-5 justify-content-end align-items-center social-icons">
                 <span style="font-size: 18px;font-weight: 500">Follow us :</span>
@@ -52,7 +53,8 @@
           
               <div class="collapse navbar-collapse d-flex justify-content-end gap-3 me-3" id="navbarNavAltMarkup">
                 <div class="navbar-nav  d-flex  gap-3">
-                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                  <a class="nav-link " aria-current="page" href="#">Home</a>
+                  <!-- active -->
                   <a class="nav-link" href="#">Features</a>
                   <a class="nav-link" href="#" >Pricing</a>
                   <a class="nav-link" href="#">Disabled</a>
@@ -61,6 +63,10 @@
                     <span><i class='bx bx-search'></i></span>
                     <span><i class='bx bxs-user' ></i></span>
                     <span><i class='bx bxs-cart'></i></span>
+                    <span class="position-relative border">
+                        <i class='bx bx-heart' id="navHeartIcon"></i>
+                        <span class="like-badge" id="likeCountBadge">0</span>
+                     </span>
 
                 </div>
               </div>
@@ -90,10 +96,10 @@
             
     </div>
     <!-- about -->
-    <div class="container-fluid">
+    <div class="container-fluid about-container">
          <div class="row">
-            <div class="col">asar</div>
-            <div class="col">
+            <div class="col-12 col-md-6 about-img"><img src="img/about.jpg" alt="about"></div>
+            <div class="col-12 col-md-6 ps-md-5 pt-md-3">
                 <div>
                     <p class="heading w-75">
                         Best Organic Fruits And Vegetables
@@ -109,11 +115,133 @@
                         <li><span class="material-symbols-outlined">check_small</span>
                             Clita duo justo magna dolore erat amet</li>
                     </ul>
+                    <button class="about-btn">Read More</button>
                 </div>
             </div>
          </div>
     </div>
-    <div class="container-fluid" style="height: 100vh;"></div>
+
+    <!-- feature section---------------------------------------------------- -->
+     <div class="container-fluid feature-container ">
+        <div class="line">
+            <p class="small"></p>
+            <p class="big"></p>
+        </div>
+        <p class="heading m-3">Our Features</p>
+       <div class="para text-center"><p >Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p></div>
+        
+       <div class="row ">
+        <div class="column col-12 col-md-4">
+            <div class="card" >
+                <img src="img/leaf.png" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title">Natural Process</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn">Read More</a>
+                </div>
+              </div>
+        </div>
+        <div class="column col-12 col-md-4  ">
+            <div class="card" >
+                <img src="img/hand.png" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title">Organic Products</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn">Read More</a>
+                </div>
+              </div>
+        </div>
+        <div class="column col-12 col-md-4  ">
+            <div class="card">
+                <img src="img/lab.png" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title">Biologically Safe</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn">Read More</a>
+                </div>
+              </div>
+        </div>
+       </div>
+     </div>
+    <div class="container product-container" style="height: 100vh;">
+        <div class="row">
+            <div class="col"><div class="product-card">
+                <div class="product-image">
+                  <img src="img/product-1.jpg" alt="Product Image">
+                  <div class="like-icon"  onclick="toggleLike(this)" >
+                    <i class='bx bx-heart'></i>
+                  </div>
+                </div>
+                <div class="product-info">
+                  <h3>Premium Cooking Oil</h3>
+                  <p>Pure and natural cooking oil, perfect for frying, baking, and daily cooking needs. Made from high-quality ingredients, it ensures a healthy and flavorful experience in every meal.</p>
+                  <div class="price">$59.99</div>
+                  <div class="buttons">
+                    <button class="view-details">
+                      <span class="material-symbols-outlined">visibility</span>
+                      View Details
+                    </button>
+                    <button class="add-to-cart">
+                      <span class="material-symbols-outlined">shopping_cart</span>
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+                <div class="product-card">
+                <div class="product-image">
+                  <img src="img/product-2.jpg" alt="Product Image">
+                  <div class="like-icon"  onclick="toggleLike(this)" >
+                    <i class='bx bx-heart'></i>
+                  </div>
+                </div>
+                <div class="product-info">
+                  <h3>Premium Cooking Oil</h3>
+                  <p>Pure and natural cooking oil, perfect for frying, baking, and daily cooking needs. Made from high-quality ingredients, it ensures a healthy and flavorful experience in every meal.</p>
+                  <div class="price">$59.99</div>
+                  <div class="buttons">
+                    <button class="view-details">
+                      <span class="material-symbols-outlined">visibility</span>
+                      View Details
+                    </button>
+                    <button class="add-to-cart">
+                      <span class="material-symbols-outlined">shopping_cart</span>
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+                <div class="product-card">
+                <div class="product-image">
+                  <img src="img/product-3.jpg" alt="Product Image">
+                  <div class="like-icon"  onclick="toggleLike(this)" >
+                    <i class='bx bx-heart'></i>
+                  </div>
+                </div>
+                <div class="product-info">
+                    <h3>Premium Cooking Oil</h3>
+                    <p>Pure and natural cooking oil, perfect for frying, baking, and daily cooking needs. Made from high-quality ingredients, it ensures a healthy and flavorful experience in every meal.</p>
+                  <div class="price">$59.99</div>
+                  <div class="buttons">
+                    <button class="view-details">
+                      <span class="material-symbols-outlined">visibility</span>
+                      View Details
+                    </button>
+                    <button class="add-to-cart">
+                      <span class="material-symbols-outlined">shopping_cart</span>
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </div>
+    </div>
     
 
 
