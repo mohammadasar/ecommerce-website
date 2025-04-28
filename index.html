@@ -20,9 +20,9 @@
 <link href="css/index.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container-fluid " style="background-color: #E1E4EB;">
+    <div class="container-fluid  d-none d-md-block " style="background-color: #E1E4EB;">
         <!-- nav-start -->
-        <div class="row py-2 border-bottom"  style="border-color: #808183;">
+        <div class="row py-2 border-bottom "  style="border-color: #808183;">
             <div class="col-6 d-flex  gap-4 px-5 text-start location">
                 <span class=" d-flex justify-content-center">
                     <i class='bx bxs-map'></i>
@@ -32,7 +32,7 @@
                          info@example.com</span>
 
             </div>
-            <div class="col-6 d-flex gap-3 px-5 justify-content-end align-items-center social-icons">
+            <div class="col-6 d-flex gap-3 px-5 justify-content-end align-items-center social-icons ">
                 <span style="font-size: 18px;font-weight: 500">Follow us :</span>
                 <span><i class='bx bxl-instagram'></i></span>
                 <span><i class='bx bxl-facebook' ></i></span>
@@ -40,9 +40,25 @@
                 <span><i class='bx bxl-youtube'></i></span>
             </div>
         </div>
+        <div class="row py-2 border-bottom  d-block d-md-none" style="border-color: #808183;">
+        <div class="nav-icons d-flex justify-content-around p-2 gap-3  ">
+          <span><i class='bx bx-search'></i></span>
+          <span><i class='bx bxs-user' ></i></span>
+          <span class="position-relative" onclick="goToCartPage()" style="cursor: pointer;">
+            <i class='bx bxs-cart' id="cartIcon"></i>
+            <span id="cartCountBadge" class="cart-badge"></span>
+          </span>
+          
+          <span class="position-relative border">
+              <i class='bx bx-heart' id="navHeartIcon"></i>
+              <span class="like-badge" id="likeCountBadge" ></span>
+           </span>
+
+      </div>
+      </div>
         </div>
           <!-- nav-bar -->
-        <div class="container-fluid nav-container sticky-top" id="navbar" style="background-color: #E1E4EB;">
+        <div class="container-fluid nav-container sticky-top d-none d-md-block" id="navbar" style="background-color: #E1E4EB;">
         <nav class="navbar navbar-expand-lg navbar-light  border-bottom ">
             <div class="container-fluid px-4 py-2">
               <a class="navbar-brand ms-3" href="#"><span>DEV</span>WERX</a>
@@ -59,13 +75,17 @@
                   <a class="nav-link" href="#" >Pricing</a>
                   <a class="nav-link" href="#">Disabled</a>
                 </div>
-                <div class="nav-icons d-flex justify-content-around gap-3">
+                <div class="nav-icons d-flex justify-content-around gap-3 d-none d-md-block ">
                     <span><i class='bx bx-search'></i></span>
                     <span><i class='bx bxs-user' ></i></span>
-                    <span><i class='bx bxs-cart'></i></span>
+                    <span class="position-relative" onclick="goToCartPage()" style="cursor: pointer;">
+                      <i class='bx bxs-cart' id="cartIcon"></i>
+                      <span id="cartCountBadge" class="cart-badge"></span>
+                    </span>
+                    
                     <span class="position-relative border">
                         <i class='bx bx-heart' id="navHeartIcon"></i>
-                        <span class="like-badge" id="likeCountBadge">0</span>
+                        <span class="like-badge" id="likeCountBadge" ></span>
                      </span>
 
                 </div>
@@ -74,7 +94,26 @@
             </div>
           </nav>
     </div>
+     <!-- Mobile Navbar -->
+<nav class="navbar d-md-none d-block">
+  <div>
+    <a class="navbar-brand ms-3" href="#"><span>DEV</span>WERX</a>
+  </div>
+  
+  <div class="menu-toggle" onclick="toggleMenu()" >
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+<div class="nav-links d-md-none"  id="navLinks">
+  <a href="index.html" class="home" onclick="toggleMenu()">HOME</a>
+  <a class="nav-link" href="#">Features</a>
+  <a class="nav-link" href="#" >Pricing</a>
+  <a class="nav-link" href="#">Disabled</a>
+</div>
     <!-- carousel -->
+     <div class="container-fluid p-0">
         <div class="owl-carousel owl-theme">
             <div class="item "><img src="img/carousel-image-1.png" alt="Slide 1">
                 <div class="content">
@@ -95,13 +134,14 @@
                        </div></div>
             
     </div>
+    </div>
     <!-- about -->
-    <div class="container-fluid about-container">
+    <div class="container-fluid about-container ">
          <div class="row">
             <div class="col-12 col-md-6 about-img"><img src="img/about.jpg" alt="about"></div>
             <div class="col-12 col-md-6 ps-md-5 pt-md-3">
-                <div>
-                    <p class="heading w-75">
+                <div class="ps-3">
+                    <p class="heading w-md-75 ">
                         Best Organic Fruits And Vegetables
                     </p>
                     <p class="para">
@@ -130,8 +170,8 @@
         <p class="heading m-3">Our Features</p>
        <div class="para text-center"><p >Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p></div>
         
-       <div class="row ">
-        <div class="column col-12 col-md-4">
+       <div class="row p-0">
+        <div class="column col-12 col-md-4 ">
             <div class="card" >
                 <img src="img/leaf.png" class="card-img-top" alt="...">
                 <div class="card-body text-center">
@@ -163,9 +203,18 @@
         </div>
        </div>
      </div>
+     <!-- product card ----- -->
     <div class="container product-container" style="height: 100vh;">
-        <div class="row">
-            <div class="col"><div class="product-card">
+      
+      <div class="product-line">
+        <p class="product-small"></p>
+        <p class="product-big"></p>
+    </div>
+    <p class="heading  ps-5">Our Products</p>
+    <div class="para text-start ps-5 "><p >Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p></div>
+        <div class="row  mt-5 ">
+            <div class="col-12 col-md-4 d-flex justify-content-center mt-md-0 mt-4" >
+              <div class="product-card">
                 <div class="product-image">
                   <img src="img/product-1.jpg" alt="Product Image">
                   <div class="like-icon"  onclick="toggleLike(this)" >
@@ -181,7 +230,7 @@
                       <span class="material-symbols-outlined">visibility</span>
                       View Details
                     </button>
-                    <button class="add-to-cart">
+                    <button class="add-to-cart" onclick="addToCart()">
                       <span class="material-symbols-outlined">shopping_cart</span>
                       Add to Cart
                     </button>
@@ -189,7 +238,7 @@
                 </div>
               </div>
             </div>
-            <div class="col">
+            <div class="col-12 col-md-4 d-flex justify-content-center mt-md-0 mt-4">
                 <div class="product-card">
                 <div class="product-image">
                   <img src="img/product-2.jpg" alt="Product Image">
@@ -206,7 +255,7 @@
                       <span class="material-symbols-outlined">visibility</span>
                       View Details
                     </button>
-                    <button class="add-to-cart">
+                    <button class="add-to-cart" onclick="addToCart()">
                       <span class="material-symbols-outlined">shopping_cart</span>
                       Add to Cart
                     </button>
@@ -214,7 +263,7 @@
                 </div>
               </div>
             </div>
-            <div class="col">
+            <div class="col-12 col-md-4 d-flex justify-content-center mt-md-0 mt-4">
                 <div class="product-card">
                 <div class="product-image">
                   <img src="img/product-3.jpg" alt="Product Image">
@@ -231,7 +280,7 @@
                       <span class="material-symbols-outlined">visibility</span>
                       View Details
                     </button>
-                    <button class="add-to-cart">
+                    <button class="add-to-cart" onclick="addToCart()">
                       <span class="material-symbols-outlined">shopping_cart</span>
                       Add to Cart
                     </button>

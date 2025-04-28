@@ -28,28 +28,84 @@ $(document).ready(function(){
 // prodect card section---------->
 
 // like button
-
 let likeCount = 0;
 
 function toggleLike(element) {
   const icon = element.querySelector('i');
   const badge = document.getElementById('likeCountBadge');
 
+  console.log("Before toggle:", {
+    iconClass: icon.className,
+    likeCount: likeCount
+  });
+
+  // Toggle heart icon and update count
   if (icon.classList.contains('bx-heart')) {
     icon.classList.remove('bx-heart');
     icon.classList.add('bxs-heart');
     likeCount++;
+    console.log("Liked ➕: new likeCount =", likeCount);
   } else {
     icon.classList.remove('bxs-heart');
     icon.classList.add('bx-heart');
-    likeCount--;
+    likeCount = Math.max(0, likeCount - 1);
+    console.log("Unliked ➖: new likeCount =", likeCount);
   }
 
-  // Update the badge
+  // Update badge visibility
   if (likeCount > 0) {
     badge.textContent = likeCount;
-    badge.style.display = 'flex'; // shows badge
+    badge.style.display = 'flex';
+    console.log("Badge updated ✅:", badge.textContent);
   } else {
-    badge.style.display = 'none'; // hides badge when count is 0
+    badge.style.display = 'none';
+    console.log("Badge hidden ❌");
+  }
+
+  console.log("After toggle:", {
+    iconClass: icon.className,
+    likeCount: likeCount
+  });
+}
+
+// add to card function--------->
+let cartCount = 0;
+
+function addToCart() {
+  const badge = document.getElementById('cartCountBadge');
+  cartCount++;
+  badge.textContent = cartCount;
+  badge.style.display = 'flex'; // show badge when there's something in cart
+}
+
+function goToCartPage() {
+  window.location.href = 'cart.html'; // replace with your actual cart page URL
+}
+
+// mobile navbar----------------------------------------->
+function toggleMenu() {
+  const navLinks = document.getElementById('navLinks');
+  const toggle = document.querySelector('.menu-toggle');
+  const navbar = document.querySelector('.navbar');
+
+  navLinks.classList.toggle('show');
+  toggle.classList.toggle('active');
+  navbar.classList.toggle('fixed');
+
+ 
+}
+
+function toggleDropdown() {
+  const dropdown = document.getElementById('dropdown');
+  const navLinks = document.getElementById('navLinks');
+
+  dropdown.classList.toggle('show');
+
+  if (dropdown.classList.contains('show')) {
+    navLinks.style.height = '100vh';
+  } else {
+    navLinks.style.height = 'auto';
   }
 }
+
+
