@@ -62,8 +62,8 @@ body{
   .like-badge {
     display: none ;
     position: absolute;
-    top: -4px;
-    right: -10px;
+    top: -10px;
+    right: -5px;
     width: 16px !important;
     height: 16px !important;
     background-color: red !important;
@@ -81,8 +81,8 @@ body{
   .cart-badge {
     display: none;
     position: absolute;
-    top: -5px !important;
-    right: -10px !important;
+    top: -10px !important;
+    right: -5px !important;
     width: 16px !important;
     height: 16px !important;
     background-color: #2da010 !important;
@@ -305,7 +305,7 @@ body{
 /* prodeuct card section ---------> */
 
 .product-container{
-  padding: 100px 0;
+  padding:200px 0;
 }
 .product-line{
   width: 100%;
@@ -462,12 +462,64 @@ body{
 .buttons i {
   margin-right: 8px;
 }
+.product-btn button{
+  border: 1px solid #2da010;
+  background: #2da010;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 50px;
+  padding: 18px 60px;
+}
 
 /* Adjust button spacing and alignment */
 .buttons button .material-symbols-outlined {
   margin-right: 8px; /* Ensure the icon and text are properly spaced */
   font-size: 20px; /* Adjust icon size */
 }
+/* visit section---------- */
+.visit-container{
+  height: 350px;
+  background: #2da010;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.visit-container .row{
+  width: 80%;
+}
+.visit-container .heading{
+  width: 100%;
+  font-family: "Lora", serif;
+  font-size: 48px;
+  font-weight: 900;
+  margin-bottom: 30px;
+  color: white;
+}
+.visit-container .para{
+  font-size: 16px;
+  font-weight: 500;
+  width: 100%;
+  margin-bottom: 20px;
+  color: white;
+}
+.visit-btn{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.visit-btn button{
+  color:white;
+  border: 1px solid #F65005;
+  font-size: 24px;
+  background: #F65005;
+  border-radius: 30px;
+  padding:10px 40px;
+}
+
+
+
+
 /* mobile responsive */
 /* Mobile Devices: Below 425px */
 @media screen and (max-width: 425px) {
