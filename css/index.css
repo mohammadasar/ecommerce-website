@@ -305,7 +305,7 @@ body{
 /* prodeuct card section ---------> */
 
 .product-container{
-  padding:200px 0;
+  padding:100px 0;
 }
 .product-line{
   width: 100%;
@@ -336,7 +336,7 @@ body{
 .product-container .para{
   font-size: 16px;
   font-weight: 500;
-  width: 80%;
+  width: 50%;
   margin-bottom: 20px;
 }
 .product-card {
@@ -516,7 +516,15 @@ body{
   border-radius: 30px;
   padding:10px 40px;
 }
-
+.cutomer-container{
+  padding: 100px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cutomer-container .para{
+  width: 40%;
+}
 
 
 
