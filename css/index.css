@@ -141,7 +141,7 @@ body{
   }
  
   
-  .owl-carousel-1 .owl-nav button.owl-prev:hover,
+ .owl-carousel-1 .owl-nav button.owl-prev:hover,
  .owl-carousel-1 .owl-nav button.owl-next:hover {
   background-color: #2b980f !important;
   color: #fff;
@@ -748,7 +748,7 @@ body{
   font-family: "Lora", serif;
   font-weight: 700 ;
 }
-.owl-carousel .item img{
+.owl-carousel-1 .item img{
   width: 100%;
   height: 350px;
 }
@@ -818,6 +818,7 @@ body{
   padding: 0;
   margin-top: 20px;
 }
+/* product-card -section */
 .product-container .heading{
   font-family: "Lora", serif;
   font-size: 36px;
@@ -830,6 +831,48 @@ body{
   font-weight: 500;
   width: 80%;
   margin-bottom: 20px;
+}
+
+ .product-container .row{
+  margin-right: 0;
+ }
+/* visit section */
+.visit-container{
+  height: 450px;
+}
+.visit-container .row{
+  width: 100%;
+  padding: 60px 0;
+}
+.visit-container .heading{
+  width: 100%;
+  font-family: "Lora", serif;
+  font-size: 36px;
+  font-weight: 900;
+  margin-bottom: 10px;
+  color: white;
+}
+.visit-container .para{
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 0.50px;
+  width: 100%;
+  margin-bottom: 20px;
+  color: white;
+}
+.visit-btn{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-top: 20px;
+}
+/* customer reviews */
+.customer-container .para{
+  width: 100%;
+}
+.owl-carousel-2 .item img{
+  width: 60px;
+  height: 60px;
 }
 
 }
