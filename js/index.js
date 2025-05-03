@@ -10,7 +10,7 @@ window.addEventListener('scroll', function () {
 
 // owl carousel
 $(document).ready(function(){
-    $(".owl-carousel").owlCarousel({
+    $(".owl-carousel-1").owlCarousel({
       items: 1,
       loop: true,
       nav: true,
@@ -108,4 +108,52 @@ function toggleDropdown() {
   }
 }
 
+// customer review carousel
+$(document).ready(function () {
+  var owl = $(".owl-carousel-2");
+
+  owl.owlCarousel({
+    center: true,
+    items: 3,
+    loop: true,
+    margin: 30,
+    nav: false,
+    autoplay: true,
+    autoplayTimeout: 3000,
+    autoplayHoverPause: true,
+    responsive: {
+      0: { items: 1 },
+      768: { items: 2 },
+      1000: { items: 3 }
+    },
+    onInitialized: applyActiveStyles,
+    onTranslated: applyActiveStyles
+  });
+
+  function applyActiveStyles(event) {
+    // Reset styles for all items
+    owl.find('.item').css({
+      'background-color': '',
+      'color': ''
+    }).find('.review-text, .review-name, p').css('color', '#000'); // Reset to black
+
+    owl.find('.quotetion i').css('color', '#2da010'); // Default green
+
+    // Apply styles to center item only
+    owl.find('.owl-item.center .item').css({
+      'background-color': '#3cb815'
+    }).find('.review-text, .review-name, p').css('color', '#fff');
+
+    owl.find('.owl-item.center .quotetion i').css('color', 'red');
+  }
+
+  // Custom Nav Buttons
+  $("#nextBtn").click(function () {
+    owl.trigger("next.owl.carousel");
+  });
+
+  $("#prevBtn").click(function () {
+    owl.trigger("prev.owl.carousel");
+  });
+});
 
