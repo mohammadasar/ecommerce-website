@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cart Badge Debug</title>
+  <style>
+    #cartCountBadge {
+      background: red;
+      color: white;
+      border-radius: 50%;
+      padding: 4px 8px;
+      position: relative;
+      top: -10px;
+      right: -10px;
+      display: none; /* hidden by default */
+    }
+  </style>
+</head>
+<body>
+
+<h3>Premium Cooking Oil</h3>
+<label>Quantity:
+  <input type="number" id="qty-oil" value="1" min="1">
+</label>
+<br><br>
+
+<!-- Cart button with badge -->
+<button class="add-to-cart" onclick="addToCart('Premium Cooking Oil', 50.00, 'qty-oil')">
+  <span class="material-symbols-outlined">shopping_cart</span>
+  Add to Cart
+</button>
+<span id="cartCountBadge">0</span>
+
+<script>
+  // Show cart count on load
+  window.onload = function () {
+    updateCartBadge();
+  };
+
+  function updateCartBadge() {
+    const badge = document.getElementById('cartCountBadge');
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    badge.textContent = totalCount;
+    badge.style.display = totalCount > 0 ? 'inline-block' : 'none';
+  }
+
+  function addToCart(name, price, qtyInputId) {
+    const quantity = parseInt(document.getElementById(qtyInputId).value) || 1;
+    const product = { name, price, quantity };
+    
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(product);
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    updateCartBadge(); // update the badge after adding
+    alert('Product added to cart!');
+  }
+</script>
+
+</body>
+</html>

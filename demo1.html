@@ -1,0 +1,42 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Products</title>
+</head>
+<body>
+  <h2>Products</h2>
+
+  <div class="product-info">
+    <h3>Premium Cooking Oil</h3>
+    <p>Pure and natural cooking oil, perfect for daily use.</p>
+    <div class="price">$50.00</div>
+    <label>Quantity: <input type="number" id="qty-oil" min="1" value="1"></label><br><br>
+    <button onclick="viewDetails('Premium Cooking Oil', 'Pure and natural cooking oil, perfect for daily use.', 59.99)">
+      View Details
+    </button>
+    <button onclick="addToCart('Premium Cooking Oil', 50.00, 'qty-oil')">
+      Add to Cart
+    </button>
+  </div>
+
+  <a href="cart.html">🛒 View Cart</a>
+
+  <script>
+    function addToCart(name, price, qtyInputId) {
+      const quantity = parseInt(document.getElementById(qtyInputId).value) || 1;
+      const product = { name, price, quantity };
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push(product);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert('Product added to cart!');
+    }
+
+    function viewDetails(name, description, price) {
+      const product = { name, description, price };
+      localStorage.setItem('viewProduct', JSON.stringify(product));
+      window.location.href = 'product-details.html';
+    }
+  </script>
+</body>
+</html>

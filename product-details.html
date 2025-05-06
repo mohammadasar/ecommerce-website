@@ -1,0 +1,34 @@
+<!-- product-details.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Details</title>
+  <style>
+    .product-detail {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Product Detail</h2>
+  <div class="product-detail" id="product-detail"></div>
+  <a href="demo1.html">⬅ Back to Products</a>
+
+  <script>
+    const product = JSON.parse(localStorage.getItem('viewProduct'));
+
+    if (product) {
+      document.getElementById('product-detail').innerHTML = `
+        <h3>${product.name}</h3>
+        <p>${product.description}</p>
+        <p><strong>Price:</strong> $${product.price.toFixed(2)}</p>
+      `;
+    } else {
+      document.getElementById('product-detail').textContent = 'No product found.';
+    }
+  </script>
+</body>
+</html>

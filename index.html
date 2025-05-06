@@ -250,12 +250,13 @@
                   <h3>Premium Cooking Oil</h3>
                   <p>Pure and natural cooking oil, perfect for frying, baking, and daily cooking needs. Made from high-quality ingredients, it ensures a healthy and flavorful experience in every meal.</p>
                   <div class="price">$59.99</div>
+                  <label>Quantity: <input type="number" id="qty-oil" min="1" value="1"></label><br><br>
                   <div class="buttons">
-                    <button class="view-details">
+                    <button class="view-details" onclick="viewDetails('Premium Cooking Oil', 'Pure and natural cooking oil, perfect for daily use.', 59.99)">
                       <span class="material-symbols-outlined">visibility</span>
                       View Details
                     </button>
-                    <button class="add-to-cart" onclick="addToCart()">
+                    <button class="add-to-cart" onclick="addToCart('Premium Cooking Oil', 50.00, 'qty-oil')">
                       <span class="material-symbols-outlined">shopping_cart</span>
                       Add to Cart
                     </button>

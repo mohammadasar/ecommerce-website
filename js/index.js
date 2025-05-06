@@ -29,54 +29,81 @@ $(document).ready(function(){
 
 // like button
 let likeCount = 0;
+ 
+ function toggleLike(element) {
+   const icon = element.querySelector('i');
+   const badge = document.getElementById('likeCountBadge');
+ 
+   console.log("Before toggle:", {
+     iconClass: icon.className,
+     likeCount: likeCount
+   });
+ 
+   // Toggle heart icon and update count
+   if (icon.classList.contains('bx-heart')) {
+     icon.classList.remove('bx-heart');
+     icon.classList.add('bxs-heart');
+     likeCount++;
+     console.log("Liked ➕: new likeCount =", likeCount);
+   } else {
+     icon.classList.remove('bxs-heart');
+     icon.classList.add('bx-heart');
+     likeCount--;
+     likeCount = Math.max(0, likeCount - 1);
+     console.log("Unliked ➖: new likeCount =", likeCount);
+   }
+ 
+   // Update the badge
+   // Update badge visibility
+   if (likeCount > 0) {
+     badge.textContent = likeCount;
+     badge.style.display = 'flex'; // shows badge
+     badge.style.display = 'flex';
+     console.log("Badge updated ✅:", badge.textContent);
+   } else {
+     badge.style.display = 'none';
+     console.log("Badge hidden ❌");
+   }
+ 
+   console.log("After toggle:", {
+     iconClass: icon.className,
+     likeCount: likeCount
+   });
+ }
+ 
+ // add to card function--------->
+ window.onload = function () {
+  updateCartBadge();
+};
 
-function toggleLike(element) {
-  const icon = element.querySelector('i');
-  const badge = document.getElementById('likeCountBadge');
+function addToCart(name, price, qtyInputId) {
+  const quantity = parseInt(document.getElementById(qtyInputId).value) || 1;
 
-  console.log("Before toggle:", {
-    iconClass: icon.className,
-    likeCount: likeCount
-  });
+  // Get the product card and its image
+  const productCard = document.getElementById(qtyInputId).closest('.product-card');
+  const image = productCard.querySelector('img')?.getAttribute('src') || '';
 
-  // Toggle heart icon and update count
-  if (icon.classList.contains('bx-heart')) {
-    icon.classList.remove('bx-heart');
-    icon.classList.add('bxs-heart');
-    likeCount++;
-    console.log("Liked ➕: new likeCount =", likeCount);
-  } else {
-    icon.classList.remove('bxs-heart');
-    icon.classList.add('bx-heart');
-    likeCount = Math.max(0, likeCount - 1);
-    console.log("Unliked ➖: new likeCount =", likeCount);
-  }
+  const product = { name, price, quantity, image }; // Add image here
 
-  // Update badge visibility
-  if (likeCount > 0) {
-    badge.textContent = likeCount;
-    badge.style.display = 'flex';
-    console.log("Badge updated ✅:", badge.textContent);
-  } else {
-    badge.style.display = 'none';
-    console.log("Badge hidden ❌");
-  }
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart.push(product);
+  localStorage.setItem('cart', JSON.stringify(cart));
 
-  console.log("After toggle:", {
-    iconClass: icon.className,
-    likeCount: likeCount
-  });
+  alert('Product added to cart!');
 }
 
-// add to card function--------->
-let cartCount = 0;
 
-function addToCart() {
+// Update badge display and count
+function updateCartBadge() {
   const badge = document.getElementById('cartCountBadge');
-  cartCount++;
-  badge.textContent = cartCount;
-  badge.style.display = 'flex'; // show badge when there's something in cart
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  badge.textContent = totalCount;
+  console.log(badge.textContent)
+  badge.style.display = totalCount > 0 ? 'flex' : 'none'; // control visibility
 }
+document.addEventListener('DOMContentLoaded', updateCartBadge);
 
 function goToCartPage() {
   window.location.href = 'cart.html'; // replace with your actual cart page URL
