@@ -27,51 +27,40 @@ $(document).ready(function(){
   
 // prodect card section---------->
 
-// like button
-let likeCount = 0;
- 
- function toggleLike(element) {
-   const icon = element.querySelector('i');
-   const badge = document.getElementById('likeCountBadge');
- 
-   console.log("Before toggle:", {
-     iconClass: icon.className,
-     likeCount: likeCount
-   });
- 
-   // Toggle heart icon and update count
-   if (icon.classList.contains('bx-heart')) {
-     icon.classList.remove('bx-heart');
-     icon.classList.add('bxs-heart');
-     likeCount++;
-     console.log("Liked ➕: new likeCount =", likeCount);
-   } else {
-     icon.classList.remove('bxs-heart');
-     icon.classList.add('bx-heart');
-     likeCount--;
-     likeCount = Math.max(0, likeCount - 1);
-     console.log("Unliked ➖: new likeCount =", likeCount);
-   }
- 
-   // Update the badge
-   // Update badge visibility
-   if (likeCount > 0) {
-     badge.textContent = likeCount;
-     badge.style.display = 'flex'; // shows badge
-     badge.style.display = 'flex';
-     console.log("Badge updated ✅:", badge.textContent);
-   } else {
-     badge.style.display = 'none';
-     console.log("Badge hidden ❌");
-   }
- 
-   console.log("After toggle:", {
-     iconClass: icon.className,
-     likeCount: likeCount
-   });
- }
- 
- // add to card function--------->
+function toggleLike(element, name, price, qtyInputId, image, description) {
+  const icon = element.querySelector('i');
+  const quantity = parseInt(document.getElementById(qtyInputId)?.value) || 1;
+
+  let likedProducts = JSON.parse(localStorage.getItem('likedProducts')) || [];
+
+  const index = likedProducts.findIndex(
+    (p) => p.name === name && p.image === image
+  );
+
+  // Toggle heart icon
+  if (icon.classList.contains('bx-heart')) {
+    icon.classList.remove('bx-heart');
+    icon.classList.add('bxs-heart');
+
+    if (index === -1) {
+      likedProducts.push({ name, price, quantity, image, description });
+    }
+  } else {
+    icon.classList.remove('bxs-heart');
+    icon.classList.add('bx-heart');
+
+    if (index !== -1) {
+      likedProducts.splice(index, 1);
+    }
+  }
+
+  localStorage.setItem('likedProducts', JSON.stringify(likedProducts));
+}
+
+
+
+
+// add to card function--------->
  window.onload = function () {
   updateCartBadge();
 };
@@ -91,6 +80,21 @@ function addToCart(name, price, qtyInputId) {
 
   alert('Product added to cart!');
 }
+
+// view to cart
+function viewDetails(name, price, qtyInputId, description) {
+  const quantity = parseInt(document.getElementById(qtyInputId).value) || 1;
+  const productCard = document.getElementById(qtyInputId).closest('.product-card');
+  const image = productCard.querySelector('img')?.getAttribute('src') || '';
+
+  // Redirect with query parameters (all encoded properly)
+  const url = `product-details.html?name=${encodeURIComponent(name)}&price=${price}&quantity=${quantity}&image=${encodeURIComponent(image)}&description=${encodeURIComponent(description)}`;
+  window.location.href = url;
+}
+
+
+
+
 
 
 // Update badge display and count

@@ -360,7 +360,7 @@ body{
 .product-image img {
   width: 100%;
   height: 250px;
-  object-fit: cover;
+  /* object-fit: cover; */
 }
 
 .like-icon {
@@ -470,7 +470,22 @@ body{
   border-radius: 50px;
   padding: 18px 60px;
 }
+.quantity {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #333;
+  font-weight: 600;
 
+}
+.quantity input{
+  width: 40%;
+  font-size: 20px;
+  border: 2px solid #2da010;
+  border-radius: 5px;
+  color: #333;
+}
 /* Adjust button spacing and alignment */
 .buttons button .material-symbols-outlined {
   margin-right: 8px; /* Ensure the icon and text are properly spaced */
@@ -858,6 +873,26 @@ body{
 .menu-toggle.active span:nth-child(3) {
   transform: rotate(-45deg) translate(6px, -6px);
 }
+/* bootom-bar options */
+.bottom-bar{
+  background-color: #e1e4eb;
+  
+}
+.bottom-bar i {
+  font-size: 24px;
+  transition: color 0.3s, transform 0.3s;
+  color: #555;
+}
+
+.bottom-bar i:hover {
+  color: #2da010; /* Bootstrap primary color */
+  transform: scale(1.2);
+  cursor: pointer;
+}
+.bottom-bar .active i {
+  color: #2da010;
+}
+
 
 /* carousel - content */
 .item .content{
@@ -957,10 +992,76 @@ body{
   width: 80%;
   margin-bottom: 20px;
 }
-
+.product-container h3{
+  font-size: 16px;
+  text-align: start;
+}
  .product-container .row{
   margin-right: 0;
  }
+ .product-image img {
+  width: 100%;
+  height: 150px;
+}
+.like-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-radius: 50%;
+  padding: 12px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.like-icon i{
+  color: #f43f5e;
+  font-size: 18px;
+}
+.quantity {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+  padding: 0;
+
+}
+.quantity input{
+  width: 35%;
+  font-size: 16px;
+  border: 2px solid #2da010;
+  border-radius: 5px;
+  color: #333;
+}
+.price{
+  text-align: left;
+}
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.buttons button {
+  flex: 1;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px; /* Space between icon and text */
+}
+
+ 
 /* visit section */
 .visit-container{
   height: 450px;
