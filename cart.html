@@ -88,6 +88,11 @@
     .back i {
       font-size: 50px;
     }
+    .mobile{
+      background-color: #ccc;
+      padding: 10px 30px;
+    
+    }
 
     @media screen and (max-width: 425px) {
       .back {
@@ -165,23 +170,28 @@
   <!-- mobile -->
  <div class="row d-flex d-md-none align-items-center justify-content-end mt-3  fixed-bottom mobile">
   <div class="col-6">
-    <div class="total-mobile"> $<span id="total">0.00</span></div>
+    <div class="total-mobile"> $<span id="total-mobile">0.00</span></div>
   </div>
   <div class="col-6">
     <button class="order-btn w-100" onclick="placeOrder()">Place Order</button>
   </div>
 </div>
 
-  <!-- destop -->
-  <div class=" d-none d-md-block">
-   <p>Total: $<span id="total">0.00</span></p>
-
-  <button class="order-btn" onclick="placeOrder()">Place Order</button>
+ <!-- Desktop -->
+<div class="row d-none d-md-flex align-items-center justify-content-end mt-3 fixed-bottom py-2 px-4 mobile">
+  <div class="col-6">
+    <div class="total-mobile"> $<span id="total-desktop">0.00</span></div>
+  </div>
+  <div class="col-6">
+    <button class="order-btn w-100" onclick="placeOrder()">Place Order</button>
+  </div>
 </div>
+
 
 
   <script>
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    console.log("card====",cart)
 
     function renderCart() {
       const cartContainer = document.getElementById('cart-items');
@@ -216,7 +226,9 @@
         cartContainer.appendChild(div);
       });
 
-      document.getElementById('total').textContent = total.toFixed(2);
+     document.getElementById('total-mobile').textContent = total.toFixed(2);
+document.getElementById('total-desktop').textContent = total.toFixed(2);
+
     }
 
 

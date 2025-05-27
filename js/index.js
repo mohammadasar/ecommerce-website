@@ -1,30 +1,30 @@
 // navbar
 window.addEventListener('scroll', function () {
-    const navbar = document.getElementById('navbar');
-    if (window.scrollY > 0) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  });
+  const navbar = document.getElementById('navbar');
+  if (window.scrollY > 0) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
 
 // owl carousel
-$(document).ready(function(){
-    $(".owl-carousel-1").owlCarousel({
-      items: 1,
-      loop: true,
-      nav: true,
-      dots: false,
-      autoplay: true,
-      autoplayTimeout: 3000,
-      navText: [
-        "<i class='bx bx-chevron-left'></i>",
-        "<i class='bx bx-chevron-right'></i>"
-      ]
-      
-    });
+$(document).ready(function () {
+  $(".owl-carousel-1").owlCarousel({
+    items: 1,
+    loop: true,
+    nav: true,
+    dots: false,
+    autoplay: true,
+    autoplayTimeout: 3000,
+    navText: [
+      "<i class='bx bx-chevron-left'></i>",
+      "<i class='bx bx-chevron-right'></i>"
+    ]
+
   });
-  
+});
+
 // prodect card section---------->
 
 function toggleLike(element, name, price, qtyInputId, image, description) {
@@ -61,7 +61,7 @@ function toggleLike(element, name, price, qtyInputId, image, description) {
 
 
 // add to card function--------->
- window.onload = function () {
+window.onload = function () {
   updateCartBadge();
 };
 
@@ -71,6 +71,7 @@ function addToCart(name, price, qtyInputId, description) {
   // Get the product card and its image
   const productCard = document.getElementById(qtyInputId).closest('.product-card');
   const image = productCard.querySelector('img')?.getAttribute('src') || '';
+
 
   const product = { name, price, quantity, image, description }; // Add description here
 
@@ -124,7 +125,7 @@ function toggleMenu() {
   toggle.classList.toggle('active');
   navbar.classList.toggle('fixed');
 
- 
+
 }
 
 function toggleDropdown() {
