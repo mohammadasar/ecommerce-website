@@ -65,14 +65,14 @@ function toggleLike(element, name, price, qtyInputId, image, description) {
   updateCartBadge();
 };
 
-function addToCart(name, price, qtyInputId) {
+function addToCart(name, price, qtyInputId, description) {
   const quantity = parseInt(document.getElementById(qtyInputId).value) || 1;
 
   // Get the product card and its image
   const productCard = document.getElementById(qtyInputId).closest('.product-card');
   const image = productCard.querySelector('img')?.getAttribute('src') || '';
 
-  const product = { name, price, quantity, image }; // Add image here
+  const product = { name, price, quantity, image, description }; // Add description here
 
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
   cart.push(product);
@@ -80,6 +80,7 @@ function addToCart(name, price, qtyInputId) {
 
   alert('Product added to cart!');
 }
+
 
 // view to cart
 function viewDetails(name, price, qtyInputId, description) {
