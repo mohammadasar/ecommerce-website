@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Form</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* Signup Form Styling */
+        .container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #212121;
+        }
+        .form {
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 2em;
+            background-color: #171717;
+            border-radius: 10px;
+            transition: .4s ease-in-out;
+            transition: box-shadow 0.3s ease-in-out, border 0.3s ease-in-out;
+            }
+            .form:hover {
+               box-shadow: 0px 0px 10px rgba(8, 213, 240, 0.5);
+               border: 1px solid rgb(8, 213, 240);
+            }
+
+        #heading {
+            text-align: center;
+            margin: 0;
+            color: white;
+            font-size: 1.5em;
+        }
+        span{
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+
+        }
+        .signup{
+            color: #06b2c7;
+        }
+        .field {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5em;
+            border-radius: 5px;
+            padding: 0.8em;
+            background-color: #252525;
+            box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+        }
+        .input-field {
+            background: none;
+            border: none;
+            outline: none;
+            width: 100%;
+            color: #d3d3d3;
+            font-size: 1em;
+        }
+        .icon {
+            color: #d3d3d3;
+            font-size: 1.2em;
+        }
+        .field:hover .icon, 
+        .field:hover .eye-icon {
+               color: rgb(8, 213, 240); /* Change color when hovering over the field */
+        }
+        .eye-icon {
+            cursor: pointer;
+            color: #d3d3d3;
+            font-size: 1.2em;
+        }
+        .btn {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5em;
+        }
+        .button {
+            padding: 0.8em;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            background-color: #212121;
+            color: black;
+            font-size: 1em;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+        .button:hover {
+            background-color: #06b2c7;
+        }
+        .login-text {
+            text-align: center;
+            margin-top: 1em;
+            color: white;
+            font-size: 0.9em;
+        }
+        .login-text a {
+            color: #06b2c7;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .login-text a:hover {
+            text-decoration: underline;
+        }
+        .logo{
+            width: 70px ;
+            margin-top: 1rem;
+
+        }
+       .logo-container{
+           text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form class="form" id="signupForm">
+            <div class=logo-container>
+                <img src="/public/logo-1.png" class="logo">
+              </div>
+            <p id="heading">Welcome To </p>
+            <span>Please enter your details to <span class="signup">Signup</span>.</span>
+            
+            <div class="field">
+                <i class="fa-solid fa-user icon"></i>
+                <input  placeholder="UserName" class="input-field" type="text" id="signupUsername" required>
+            </div>
+            
+            <div class="field">
+                <i class="fa-solid fa-envelope icon"></i>
+                <input placeholder="Email" class="input-field" type="email" id="email" required>
+            </div>
+            
+            <div class="field">
+                <i class="fa-solid fa-lock icon"></i>
+                <input placeholder="Password" class="input-field" type="password" id="signupPassword" required>
+                <i class="fa-solid fa-eye-slash eye-icon" onclick="togglePassword('signupPassword', this)"></i>
+            </div>
+            
+            <div class="field">
+                <i class="fa-solid fa-lock icon"></i>
+                <input placeholder="Confirm Password" class="input-field" type="password" id="confirmPassword" required>
+                <i class="fa-solid fa-eye-slash eye-icon" onclick="togglePassword('confirmPassword', this)"></i>
+            </div>
+            
+            <div class="btn">
+                <button class="button" type="submit">Register</button>
+            </div>
+
+            <p class="login-text">Already have an account? <a href="singin.html">Login</a></p>
+        </form>
+    </div>
+
+    <script>
+        function togglePassword(inputId, icon) {
+            let inputField = document.getElementById(inputId);
+            if (inputField.type === "password") {
+                inputField.type = "text";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            } else {
+                inputField.type = "password";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            }
+        }
+
+        
+
+        
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+<script src="js/auth-handler.js"></script>
+</body>
+</html>
