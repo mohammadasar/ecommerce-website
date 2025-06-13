@@ -40,11 +40,11 @@ window.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       console.error('Error decoding token:', err);
       localStorage.removeItem('token');
-      window.location.href = 'signin.html';
+      
     }
   } else {
     console.warn('No token found. Redirecting to login.');
-    window.location.href = 'signin.html';
+    
   }
 });
 
