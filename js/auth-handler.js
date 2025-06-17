@@ -1,4 +1,5 @@
-const API_BASE = 'http://localhost:8080/auth';
+// const API_BASE = 'http://localhost:8080/auth';
+const API_BASE = 'https://ecommerce-backend-wnu9.onrender.com/auth';
 
 // Signup
 document.getElementById('signupForm')?.addEventListener('submit', async (e) => {
