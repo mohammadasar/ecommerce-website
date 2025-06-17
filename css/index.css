@@ -434,11 +434,13 @@ body{
   padding: 10px;
   border-radius: 25px;
   font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
   transition: 0.3s ease;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  display: flex ;
+  align-items: center ;
+  justify-content: center ;
+  gap: 6px;
 }
 
 .add-to-cart {
@@ -489,8 +491,12 @@ body{
 }
 /* Adjust button spacing and alignment */
 .buttons button .material-symbols-outlined {
-  margin-right: 8px; /* Ensure the icon and text are properly spaced */
-  font-size: 20px; /* Adjust icon size */
+ font-size: 24px;
+  line-height: 1;
+  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 /* visit section---------- */
 .visit-container{
