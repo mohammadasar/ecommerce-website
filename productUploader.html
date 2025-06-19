@@ -111,7 +111,7 @@
       const card = document.createElement('div');
       card.className = 'product-card';
       card.innerHTML = `
-      ${p.imageUrl ? `<img src="https://ecommerce-backend-wnu9.onrender.com${p.imageUrl}" alt="${p.title}">` : ''}
+      ${p.imageUrl ? `<img src="${p.imageUrl}" alt="${p.title}">` : ''}
         <h3>${p.title}</h3>
         <p><strong>Category:</strong> ${p.category}</p>
         <p>${p.description}</p>
