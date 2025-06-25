@@ -46,6 +46,7 @@
         <span><i class='bx bxl-youtube'></i></span>
       </div>
     </div>
+    <!-- user base showed -->
     <div class="row py-2 border-bottom  d-block d-md-none" style="border-color: #808183;">
       <div class="nav-icons d-flex justify-content-around p-2 gap-3  ">
         <span><i class='bx bx-search'></i></span>
@@ -108,12 +109,27 @@
     <div>
       <a class="navbar-brand ms-3" href="#"><span>DEV</span>WERX</a>
     </div>
+ <div class="toggle-bar d-flex justify-content-between align-items-center gap-4">
+  
+  <span class="d-flex justify-content-center align-items-center">
+    <a href="signin.html" class="border d-flex flex-column  text-decoration-none">
+      <i class='bx bxs-user'></i>
+      <small>Login</small>
+    </a>
+    
+  </span>
 
-    <div class="menu-toggle" onclick="toggleMenu()">
+  <div class="d-flex flex-column justify-content-center align-items-center gap-1" onclick="toggleMenu()">
+    <div class="menu-toggle">
       <span></span>
       <span></span>
       <span></span>
     </div>
+    <small>Menu</small>
+  </div>
+
+</div>
+
   </nav>
   <div class="nav-links d-md-none" id="navLinks">
     <a href="index.html" class="home" onclick="toggleMenu()">HOME</a>

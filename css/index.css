@@ -867,6 +867,15 @@ body{
   background-color: #f0f0f0;
 }
 
+/* user-icon */
+
+.toggle-bar i{
+  font-size: 24px;
+  color: black;
+}
+.toggle-bar a{
+  color: black;
+}
 
 /* Hamburger animation optional */
 .menu-toggle.active span:nth-child(1) {
