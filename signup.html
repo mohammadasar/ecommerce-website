@@ -8,8 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         /* Signup Form Styling */
+        body{
+            margin:0;
+        }
         .container {
             height: 100vh;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -100,6 +104,7 @@
         .login-text {
             text-align: center;
             margin-top: 1em;
+            margin-bottom: 0;
             color: white;
             font-size: 0.9em;
         }
@@ -111,6 +116,17 @@
         .login-text a:hover {
             text-decoration: underline;
         }
+        .home-text{
+            text-align: center;
+            margin-top: 0;
+            color: white;
+            font-size: 0.9em;
+        }
+         .home-text a {
+            color: #06b2c7;
+            text-decoration: none;
+            font-weight: bold;
+        }
         .logo{
             width: 70px ;
             margin-top: 1rem;
@@ -119,10 +135,19 @@
        .logo-container{
            text-align: center;
         }
+        @media screen and (max-width: 425px) {
+         .button {
+            background-color: #06b2c7;
+            font: 18px;
+            font-weight: 700;
+        }
+
+
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container container-fluid ">
         <form class="form" id="signupForm">
             <div class=logo-container>
                 <img src="/public/logo-1.png" class="logo">
@@ -156,7 +181,8 @@
                 <button class="button" type="submit">Register</button>
             </div>
 
-            <p class="login-text">Already have an account? <a href="signin.html">Login</a></p>
+            <p class="login-text">Already have an account ? <a href="signin.html">Login</a></p>
+            <p class="home-text">Go to Home ? <a href="index.html">Home</a></p>
         </form>
     </div>
 
