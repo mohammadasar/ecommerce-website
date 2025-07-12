@@ -1002,6 +1002,9 @@ body{
   margin-bottom: 10px;
   
 }
+.product-info {
+  padding: 8px;
+}
 .product-container .para{
   font-size: 16px;
   font-weight: 500;
@@ -1017,7 +1020,7 @@ body{
  }
  .product-image img {
   width: 100%;
-  height: 150px;
+  height: 130px;
 }
 .like-icon {
   position: absolute;
@@ -1059,7 +1062,7 @@ body{
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  margin-top: 15px;
+  margin-top: 0px;
 }
 
 .buttons button {
@@ -1067,7 +1070,7 @@ body{
   border: none;
   padding: 6px 10px;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 6px;
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s ease;
@@ -1076,6 +1079,11 @@ body{
   justify-content: center;
   gap: 5px; /* Space between icon and text */
 }
+.buttons button .material-symbols-outlined {
+   font-size: 18px;
+
+}
+
 
  
 /* visit section */
@@ -1112,9 +1120,17 @@ body{
 .customer-container .para{
   width: 100%;
 }
+.owl-carousel-2 .img{
+  width: 80px;
+  height: 80px;
+  /* object-fit:cover */
+  
+}
 .owl-carousel-2 .item img{
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
+  /* object-fit:cover */
+  
 }
 .owl-dots {
   display: none !important;
