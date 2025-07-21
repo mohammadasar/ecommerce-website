@@ -190,3 +190,40 @@ $(document).ready(function () {
   });
 });
 
+// get products ----->
+document.addEventListener("DOMContentLoaded", function () {
+  fetch('https://ecommerce-backend-wnu9.onrender.com/admin/upload') // Adjust URL if hosted
+    .then(res => res.json())
+    .then(products => {
+      const container = document.querySelector('.product-row'); // your product row container
+      products.forEach((product, index) => {
+        const html = `
+          <div class="col-6 col-md-4 d-flex justify-content-center mt-md-3 mt-4">
+            <div class="product-card" onclick="viewDetails('${product.name}', ${product.price}, 'qty-${index}')">
+              <div class="product-image">
+                <img src="${product.image}" alt="${product.name}">
+                <div class="like-icon" onclick="event.stopPropagation(); toggleLike(this, '${product.name}', ${product.price}, 'qty-${index}', '${product.image}', '${product.description}')">
+                  <i class='bx bx-heart'></i>
+                </div>
+              </div>
+              <div class="product-info">
+                <h3>${product.name}</h3>
+                <p class="d-none d-md-block">${product.description}</p>
+                <div class="row mt-md-2">
+                  <div class="col-6 col-md-5 quantity d-none d-md-block">
+                    <label>Qty: <input type="number" id="qty-${index}" min="1" value="1"></label><br><br>
+                  </div>
+                  <div class="col-12 col-md-7 price">$${product.price}</div>
+                </div>
+                <div class="buttons">
+                  <!-- Add buttons here -->
+                </div>
+              </div>
+            </div>
+          </div>`;
+        container.insertAdjacentHTML('beforeend', html);
+      });
+    })
+    .catch(err => console.error('Error:', err));
+});
+

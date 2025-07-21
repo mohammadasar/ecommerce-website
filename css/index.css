@@ -304,14 +304,14 @@ body{
 /* prodeuct card section ---------> */
 
 .product-container{
-  padding:100px 0;
+  padding:20px 0;
 }
 .product-line{
   width: 100%;
   display: flex !important;
   flex-direction: column !important;
   justify-content: flex-start !important;
-  padding-left:50px;
+  padding-left:28px;
 }
 .product-small {
   border-bottom: 2px solid #3CB815;
@@ -788,7 +788,7 @@ body{
 
 /* mobile responsive */
 /* Mobile Devices: Below 425px */
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 427px) {
 .navbar {
   display: flex !important;
   justify-content: space-between !important;
