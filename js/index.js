@@ -194,8 +194,7 @@ $(document).ready(function () {
 document.addEventListener("DOMContentLoaded", function () {
   const loader = document.getElementById("loader"); // get loader
 
-   // Show loader initially
-  loader.style.display = "block";
+  
   //  fetch('http://localhost:8080/admin/products')
   fetch('https://ecommerce-backend-wnu9.onrender.com/admin/upload') // Adjust URL if hosted
     .then(res => res.json())
