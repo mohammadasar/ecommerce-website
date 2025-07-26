@@ -200,55 +200,12 @@
     </div>
     <p class="heading  ps-4 m-0">Our Products</p>
     <div class="row product-row px-4 ">
-           <div class="col-6 col-md-4 d-flex justify-content-center mt-md-3 mt-4">
-        <div class="product-card" onclick="viewDetails('Premium Cooking Oil', 50.99 ,'qty-oil-6')">
-          <div class="product-image">
-            <img src="img/product-2.jpg" alt="Product Image">
-            <div class="like-icon" onclick="event.stopPropagation(); toggleLike(this, 'Premium Cooking Oil', 50.99, 'qty-oil-6', 'img/product-2.jpg', 'Pure and natural cooking oil, perfect for frying, baking, and daily cooking needs.')">
-              <i class='bx bx-heart'></i>
-            </div>
-          </div>
-          <div class="product-info">
-            <h3>Premium Cooking Oil</h3>
-            <p class="d-none d-md-block ">Pure and natural cooking oil, perfect for frying, baking, and daily cooking
-              needs. Made from high-quality ingredients, it ensures a healthy and flavorful experience in every meal.
-            </p>
-            <div class="row mt-md-2">
-              <div class="col-6 col-md-5  quantity d-none d-md-block">
-                <label>Qty: <input type="number" id="qty-oil-6" min="1" value="1"></label><br><br>
-              </div>
-              <div class="col-12 col-md-7 price">$50.99</div>
-            </div>
-            <div class="buttons">
-              <!-- DESKTOP -->
-              <button class="view-details d-none d-md-block"
-                onclick="event.stopPropagation(); viewDetails('Premium Cooking Oil', 50.99 ,'qty-oil-6','Pure and natural cooking oil, perfect for frying,')">
-                <span class="material-symbols-outlined">visibility</span>
-                View Details
-              </button>
-
-              <button class="add-to-cart d-none d-md-block"
-                onclick="event.stopPropagation(); addToCart('Premium Cooking Oil', 50.00, 'qty-oil-6','Pure and natural cooking oil, perfect for frying')">
-                <span class="material-symbols-outlined">shopping_cart</span>
-                Add to Cart
-              </button>
-
-              <!-- MOBILE -->
-              <button class="view-details d-block d-md-none"
-                onclick="event.stopPropagation(); viewDetails('Premium Cooking Oil', 50.99 ,'qty-oil-6','Pure and natural cooking oil, perfect for frying,')">
-                <span class="material-symbols-outlined">visibility</span>
-              </button>
-
-              <button class="add-to-cart d-block d-md-none"
-                onclick="event.stopPropagation(); addToCart('Premium Cooking Oil', 50.00, 'qty-oil-6','Pure and natural cooking oil, perfect for frying')">
-                <span class="material-symbols-outlined">shopping_cart</span>
-              </button>
-
-            </div>
-            
-          </div>
-        </div>
-      </div>
+      <!-- loader -->
+       <div class="d-flex justify-content-center align-items-center m-5">
+         <div class="loader" id="loader"></div>
+         Loading...
+         </div>
+          
 
     </div>
     <div class="product-btn text-center mt-4">

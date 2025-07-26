@@ -192,10 +192,15 @@ $(document).ready(function () {
 
 // get products ----->
 document.addEventListener("DOMContentLoaded", function () {
+  const loader = document.getElementById("loader"); // get loader
+
+   // Show loader initially
+  loader.style.display = "block";
   //  fetch('http://localhost:8080/admin/products')
   fetch('https://ecommerce-backend-wnu9.onrender.com/admin/upload') // Adjust URL if hosted
     .then(res => res.json())
     .then(products => {
+       loader.style.display = "none";
       const container = document.querySelector('.product-row'); // your product row container
       products.forEach((product, index) => {
         console.log(product)
