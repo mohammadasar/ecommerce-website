@@ -344,10 +344,18 @@ body{
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   width: 320px;
+  height: auto;        /* ✅ Correct – allows content to define height */
+  min-height: unset;   /* ✅ Optional – good to reset if you had a min-height earlier */
   position: relative;
   text-align: center;
   transition: transform 0.3s ease;
 }
+.product-row{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;  /* ⬅ prevents height equalizing */
+}
+
 
 .product-card:hover {
   transform: translateY(-5px);

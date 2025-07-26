@@ -34,6 +34,7 @@ document.getElementById('signupForm')?.addEventListener('submit', async (e) => {
       window.location.href = 'index.html'; // ✅ Redirect
     } else {
       alert("Signup failed: " + data);
+      
     }
 
   } catch (error) {

@@ -192,22 +192,24 @@ $(document).ready(function () {
 
 // get products ----->
 document.addEventListener("DOMContentLoaded", function () {
+  //  fetch('http://localhost:8080/admin/products')
   fetch('https://ecommerce-backend-wnu9.onrender.com/admin/upload') // Adjust URL if hosted
     .then(res => res.json())
     .then(products => {
       const container = document.querySelector('.product-row'); // your product row container
       products.forEach((product, index) => {
+        console.log(product)
         const html = `
           <div class="col-6 col-md-4 d-flex justify-content-center mt-md-3 mt-4">
             <div class="product-card" onclick="viewDetails('${product.name}', ${product.price}, 'qty-${index}')">
               <div class="product-image">
-                <img src="${product.image}" alt="${product.name}">
+                <img src="http://localhost:8080${product.imageUrl}" alt="${product.name}">
                 <div class="like-icon" onclick="event.stopPropagation(); toggleLike(this, '${product.name}', ${product.price}, 'qty-${index}', '${product.image}', '${product.description}')">
                   <i class='bx bx-heart'></i>
                 </div>
               </div>
               <div class="product-info">
-                <h3>${product.name}</h3>
+                <h3>${product.title}</h3>
                 <p class="d-none d-md-block">${product.description}</p>
                 <div class="row mt-md-2">
                   <div class="col-6 col-md-5 quantity d-none d-md-block">
@@ -216,8 +218,31 @@ document.addEventListener("DOMContentLoaded", function () {
                   <div class="col-12 col-md-7 price">$${product.price}</div>
                 </div>
                 <div class="buttons">
-                  <!-- Add buttons here -->
-                </div>
+              <!-- DESKTOP -->
+              <button class="view-details d-none d-md-block"
+                onclick="event.stopPropagation(); viewDetails('Premium Cooking Oil', 50.99 ,'qty-oil-6','Pure and natural cooking oil, perfect for frying,')">
+                <span class="material-symbols-outlined">visibility</span>
+                View Details
+              </button>
+
+              <button class="add-to-cart d-none d-md-block"
+                onclick="event.stopPropagation(); addToCart('Premium Cooking Oil', 50.00, 'qty-oil-6','Pure and natural cooking oil, perfect for frying')">
+                <span class="material-symbols-outlined">shopping_cart</span>
+                Add to Cart
+              </button>
+
+              <!-- MOBILE -->
+              <button class="view-details d-block d-md-none"
+                onclick="event.stopPropagation(); viewDetails('Premium Cooking Oil', 50.99 ,'qty-oil-6','Pure and natural cooking oil, perfect for frying,')">
+                <span class="material-symbols-outlined">visibility</span>
+              </button>
+
+              <button class="add-to-cart d-block d-md-none"
+                onclick="event.stopPropagation(); addToCart('Premium Cooking Oil', 50.00, 'qty-oil-6','Pure and natural cooking oil, perfect for frying')">
+                <span class="material-symbols-outlined">shopping_cart</span>
+              </button>
+
+            </div>
               </div>
             </div>
           </div>`;
