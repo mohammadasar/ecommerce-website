@@ -217,7 +217,8 @@ document.addEventListener("DOMContentLoaded", function () {
           <div class="col-6 col-md-4 d-flex justify-content-center mt-md-3 mt-4">
             <div class="product-card" onclick="viewDetails('${product.name}', ${product.price}, 'qty-${index}')">
               <div class="product-image">
-                <img src="http://localhost:8080${product.imageUrl}" alt="${product.name}">
+                // <img src="http://localhost:8080${product.imageUrl}" alt="${product.name}">
+                <img src="${product.imageUrl}" alt="${product.name}">
                 <div class="like-icon" onclick="event.stopPropagation(); toggleLike(this, '${product.name}', ${product.price}, 'qty-${index}', '${product.imageUrl}', '${product.description}')">
                   <i class='bx bx-heart'></i>
                 </div>
