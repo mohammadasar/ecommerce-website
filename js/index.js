@@ -192,23 +192,33 @@ $(document).ready(function () {
 
 // get products ----->
 document.addEventListener("DOMContentLoaded", function () {
-  const loader = document.getElementById("loader"); // get loader
+  const loader = document.getElementById("loader");
+  const container = document.querySelector('.product-row');
 
-  
-  //  fetch('http://localhost:8080/admin/products')
-  fetch('https://ecommerce-backend-wnu9.onrender.com/admin/upload') // Adjust URL if hosted
-    .then(res => res.json())
-    .then(products => {
-       loader.style.display = "none";
-      const container = document.querySelector('.product-row'); // your product row container
+  // Start both fetch and timer at the same time
+  // const fetchPromise = fetch('http://localhost:8080/admin/products')
+  const fetchPromise = fetch('https://ecommerce-backend-wnu9.onrender.com/admin/products')
+    .then(res => res.json());
+
+  const delayPromise = new Promise(resolve => setTimeout(resolve, 5000)); // ⏳ 5s delay
+
+  Promise.all([fetchPromise, delayPromise])
+    .then(([products]) => {
+      if (!Array.isArray(products)) {
+        loader.innerHTML = "Failed to load products.";
+        return;
+      }
+
+      loader.style.display = "none"; // ✅ hide after 5s and fetch complete
+      container.innerHTML = ''; // clear any loader inside
+
       products.forEach((product, index) => {
-        console.log(product)
         const html = `
           <div class="col-6 col-md-4 d-flex justify-content-center mt-md-3 mt-4">
             <div class="product-card" onclick="viewDetails('${product.name}', ${product.price}, 'qty-${index}')">
               <div class="product-image">
                 <img src="http://localhost:8080${product.imageUrl}" alt="${product.name}">
-                <div class="like-icon" onclick="event.stopPropagation(); toggleLike(this, '${product.name}', ${product.price}, 'qty-${index}', '${product.image}', '${product.description}')">
+                <div class="like-icon" onclick="event.stopPropagation(); toggleLike(this, '${product.name}', ${product.price}, 'qty-${index}', '${product.imageUrl}', '${product.description}')">
                   <i class='bx bx-heart'></i>
                 </div>
               </div>
@@ -222,37 +232,35 @@ document.addEventListener("DOMContentLoaded", function () {
                   <div class="col-12 col-md-7 price">$${product.price}</div>
                 </div>
                 <div class="buttons">
-              <!-- DESKTOP -->
-              <button class="view-details d-none d-md-block"
-                onclick="event.stopPropagation(); viewDetails('Premium Cooking Oil', 50.99 ,'qty-oil-6','Pure and natural cooking oil, perfect for frying,')">
-                <span class="material-symbols-outlined">visibility</span>
-                View Details
-              </button>
-
-              <button class="add-to-cart d-none d-md-block"
-                onclick="event.stopPropagation(); addToCart('Premium Cooking Oil', 50.00, 'qty-oil-6','Pure and natural cooking oil, perfect for frying')">
-                <span class="material-symbols-outlined">shopping_cart</span>
-                Add to Cart
-              </button>
-
-              <!-- MOBILE -->
-              <button class="view-details d-block d-md-none"
-                onclick="event.stopPropagation(); viewDetails('Premium Cooking Oil', 50.99 ,'qty-oil-6','Pure and natural cooking oil, perfect for frying,')">
-                <span class="material-symbols-outlined">visibility</span>
-              </button>
-
-              <button class="add-to-cart d-block d-md-none"
-                onclick="event.stopPropagation(); addToCart('Premium Cooking Oil', 50.00, 'qty-oil-6','Pure and natural cooking oil, perfect for frying')">
-                <span class="material-symbols-outlined">shopping_cart</span>
-              </button>
-
-            </div>
+                  <button class="view-details d-none d-md-block"
+                    onclick="event.stopPropagation(); viewDetails('${product.name}', ${product.price}, 'qty-${index}', '${product.description}')">
+                    <span class="material-symbols-outlined">visibility</span>
+                    View Details
+                  </button>
+                  <button class="add-to-cart d-none d-md-block"
+                    onclick="event.stopPropagation(); addToCart('${product.name}', ${product.price}, 'qty-${index}', '${product.description}')">
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                    Add to Cart
+                  </button>
+                  <button class="view-details d-block d-md-none"
+                    onclick="event.stopPropagation(); viewDetails('${product.name}', ${product.price}, 'qty-${index}', '${product.description}')">
+                    <span class="material-symbols-outlined">visibility</span>
+                  </button>
+                  <button class="add-to-cart d-block d-md-none"
+                    onclick="event.stopPropagation(); addToCart('${product.name}', ${product.price}, 'qty-${index}', '${product.description}')">
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>`;
+          </div>
+        `;
         container.insertAdjacentHTML('beforeend', html);
       });
     })
-    .catch(err => console.error('Error:', err));
+    .catch(err => {
+      loader.innerHTML = "Failed to load products.";
+      console.error('Error:', err);
+    });
 });
 
