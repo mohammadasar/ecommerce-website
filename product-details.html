@@ -49,6 +49,17 @@
     .product-detail  p{
       font-size: 2rem;
     }
+    .back{
+      background-color: #ccc;
+      padding: 8px 10px;
+      font-size: 24px;
+      font-weight: 800;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+    }
     @media screen and (max-width: 425px) {
       .product-detail  h3{
       font-size: 2rem;
@@ -94,7 +105,7 @@
       </a> Back to Products
   </div>
   
-  <div class="product-detail" id="product-detail"></div>
+  <div class="product-detail mt-5" id="product-detail"></div>
   <div class="bottom-option d-md-none d-block fixed-bottom" id="bottom-option"></div>
 
   
@@ -117,13 +128,16 @@ if (name && price && image && quantity && description) {
           <i class='bx bx-heart'></i>
         </div>
       </div>
-      <div class="col-12 col-md-6 px-3 px-md-5">
-        <h3>${name}</h3>
-        <p>${description}</p>
-        <p class="mt-3"><strong>Price:</strong> $${price}</p>
-        <label><strong>Quantity:</strong>
+      <div class="col-12 col-md-6   d-flex flex-column justify-content-between">
+        <div>
+        <h3 class="px-3 px-md-5" >${name}</h3>
+        <p class="px-3 px-md-5">${description}</p>
+        <p class="mt-3 px-3 px-md-5"><strong>Price:</strong> $${price}</p>
+        <label class="px-3 px-md-5"><strong>Quantity:</strong>
           <input type="number" id="qty-input" value="${quantity}" min="1">
         </label><br>
+        </div>
+        <div class="bottom-option d-md-block d-block" id="bottom-option"></div>
       </div>
     </div>
   `;
@@ -135,7 +149,7 @@ if (name && price && image && quantity && description) {
       <button class="btn buy-btn" onclick="buyNow('${name}', ${price}, 'qty-input')">Buy Now</button>
     </div>
   `;
-// }
+
 
 
   // ✅ Attach the event listener for the like button

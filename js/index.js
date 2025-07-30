@@ -196,8 +196,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const container = document.querySelector('.product-row');
 
   // Start both fetch and timer at the same time
-  // const fetchPromise = fetch('http://localhost:8080/admin/products')
-  const fetchPromise = fetch('https://ecommerce-backend-wnu9.onrender.com/admin/products')
+  const fetchPromise = fetch('http://localhost:8080/admin/products')
+  // const fetchPromise = fetch('https://ecommerce-backend-wnu9.onrender.com/admin/products')
     .then(res => res.json());
 
   const delayPromise = new Promise(resolve => setTimeout(resolve, 5000)); // ⏳ 5s delay
@@ -212,14 +212,15 @@ document.addEventListener("DOMContentLoaded", function () {
       loader.style.display = "none"; // ✅ hide after 5s and fetch complete
       container.innerHTML = ''; // clear any loader inside
 // <img src="http://localhost:8080${product.imageUrl}" alt="${product.name}">
+//<img src="${product.imageUrl}" alt="${product.name}"></img>
       products.forEach((product, index) => {
         const html = `
           <div class="col-6 col-md-4 d-flex justify-content-center mt-md-3 mt-4">
-            <div class="product-card" onclick="viewDetails('${product.name}', ${product.price}, 'qty-${index}')">
+            <div class="product-card" onclick="viewDetails('${product.title}', ${product.price}, 'qty-${index}', '${product.description}')">
               <div class="product-image">
                 
-                <img src="${product.imageUrl}" alt="${product.name}">
-                <div class="like-icon" onclick="event.stopPropagation(); toggleLike(this, '${product.name}', ${product.price}, 'qty-${index}', '${product.imageUrl}', '${product.description}')">
+                <img src="http://localhost:8080${product.imageUrl}" alt="${product.title}">
+                <div class="like-icon" onclick="event.stopPropagation(); toggleLike(this, '${product.title}', ${product.price}, 'qty-${index}', '${product.imageUrl}', '${product.description}')">
                   <i class='bx bx-heart'></i>
                 </div>
               </div>
@@ -234,21 +235,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
                 <div class="buttons">
                   <button class="view-details d-none d-md-block"
-                    onclick="event.stopPropagation(); viewDetails('${product.name}', ${product.price}, 'qty-${index}', '${product.description}')">
+                    onclick="event.stopPropagation(); viewDetails('${product.title}', ${product.price}, 'qty-${index}', '${product.description}')">
                     <span class="material-symbols-outlined">visibility</span>
                     View Details
                   </button>
                   <button class="add-to-cart d-none d-md-block"
-                    onclick="event.stopPropagation(); addToCart('${product.name}', ${product.price}, 'qty-${index}', '${product.description}')">
+                    onclick="event.stopPropagation(); addToCart('${product.title}', ${product.price}, 'qty-${index}', '${product.description}')">
                     <span class="material-symbols-outlined">shopping_cart</span>
                     Add to Cart
                   </button>
                   <button class="view-details d-block d-md-none"
-                    onclick="event.stopPropagation(); viewDetails('${product.name}', ${product.price}, 'qty-${index}', '${product.description}')">
+                    onclick="redirectToDetails('${product.title}', ${product.price}, 'qty-${index}', '${product.imageUrl}', \`${product.description}\`)"
                     <span class="material-symbols-outlined">visibility</span>
                   </button>
                   <button class="add-to-cart d-block d-md-none"
-                    onclick="event.stopPropagation(); addToCart('${product.name}', ${product.price}, 'qty-${index}', '${product.description}')">
+                    onclick="event.stopPropagation(); addToCart('${product.title}', ${product.price}, 'qty-${index}', '${product.description}')">
                     <span class="material-symbols-outlined">shopping_cart</span>
                   </button>
                 </div>

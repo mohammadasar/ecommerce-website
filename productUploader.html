@@ -101,8 +101,8 @@
   });
 
   async function loadProducts() {
-    // const res = await fetch('http://localhost:8080/admin/products');
-    const res = await fetch('https://ecommerce-backend-wnu9.onrender.com/admin/products');
+    const res = await fetch('http://localhost:8080/admin/products');
+    // const res = await fetch('https://ecommerce-backend-wnu9.onrender.com/admin/products');
 
     const products = await res.json();
     productList.innerHTML = '';

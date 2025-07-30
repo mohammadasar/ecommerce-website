@@ -1,5 +1,5 @@
-// const API_BASE = 'http://localhost:8080/auth';
-const API_BASE = 'https://ecommerce-backend-wnu9.onrender.com/auth';
+const API_BASE = 'http://localhost:8080/auth';
+// const API_BASE = 'https://ecommerce-backend-wnu9.onrender.com/auth';
 
 const signupForm = document.getElementById('signupForm');
 const usernameInput = document.getElementById('signupUsername');
