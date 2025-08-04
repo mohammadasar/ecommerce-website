@@ -6,6 +6,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link href="css/index.css" rel="stylesheet">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
   <title>Product Details</title>
   <style>
     .product-detail {
@@ -163,11 +165,72 @@ if (name && price && image && quantity && description) {
     }
 
     // Function to handle Buy Now
-    function buyNow(name, price, qtyInputId) {
-      const qty = parseInt(document.getElementById(qtyInputId).value) || 1;
-      alert(`Proceeding to buy ${qty} x ${decodeURIComponent(name)} at $${price} each.`);
-      // You can redirect to payment/checkout page here
-    }
+ function buyNow(name, price, qtyInputId) {
+  const qty = parseInt(document.getElementById(qtyInputId).value) || 1;
+  const totalAmount = price * qty;
+
+  fetch('http://localhost:8080/api/payment/create-order', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ amount: totalAmount })
+  })
+  .then(res => res.json())
+  .then(orderData => {
+    const options = {
+      key: "rzp_test_qoebkgBWvtmZQw", // Replace with your real Key ID
+      amount: orderData.amount,
+      currency: "INR",
+      name: "Devwerx Software Solution",
+      description: name,
+      image: "https://your-logo-url.png", // Optional
+      order_id: orderData.id,
+
+      // ✅ ADD YOUR HANDLER FUNCTION HERE
+      handler: function (response) {
+        const qty = parseInt(document.getElementById(qtyInputId).value) || 1;
+
+        const orderDetails = {
+          productName: name,
+          price: price,
+          quantity: qty,
+          orderId: response.razorpay_order_id,
+          paymentId: response.razorpay_payment_id,
+          status: "paid"
+        };
+
+        fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders/save", {
+        // fetch("http://localhost:8080/api/orders/save", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(orderDetails)
+        })
+        .then(res => res.json())
+        .then(data => {
+          alert("Payment successful and order saved!");
+        })
+        .catch(err => console.error("Order save failed", err));
+      },
+
+      prefill: {
+        name: "Customer Name",
+        email: "customer@example.com",
+        contact: "9361570822"
+      },
+      theme: {
+        color: "#3399cc"
+      }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+  })
+  .catch(err => console.error("Error creating Razorpay order:", err));
+}
+
 
     // Function to handle Add to Cart
     function addToCart(name, price, qtyInputId, image) {
