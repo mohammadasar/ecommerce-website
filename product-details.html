@@ -169,7 +169,8 @@ if (name && price && image && quantity && description) {
   const qty = parseInt(document.getElementById(qtyInputId).value) || 1;
   const totalAmount = price * qty;
 
-  fetch('http://localhost:8080/api/payment/create-order', {
+  fetch('https://ecommerce-backend-wnu9.onrender.com/api/payment/create-order', {
+  // fetch('http://localhost:8080/api/payment/create-order', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
