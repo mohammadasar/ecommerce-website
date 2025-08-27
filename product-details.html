@@ -266,7 +266,7 @@ function saveAddressAndProceed() {
   };
 
   // Basic validation
-  if (!addressData.name || !addressData.phone || !addressData.address) {
+  if (!addressData.fullName || !addressData.phone || !addressData.address) {
     alert("Please fill all required fields.");
     return;
   }
