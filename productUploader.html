@@ -3,15 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>Product Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
   <style>
     body {
       font-family: Arial;
       padding: 20px;
     }
 
-    form, .product-list {
+    form{
       max-width: 600px;
+      padding: 10px;
+      border: 2px solid #2da010;
+      border-radius: 10px;
       margin: auto;
+      box-shadow:2px 4px 8px #2da010;
     }
 
     input, textarea, button {
@@ -19,6 +25,10 @@
       width: 100%;
       margin: 10px 0;
       padding: 10px;
+    }
+    input, textarea{
+      border: 2px solid #dc3545;
+       border-radius: 8px;
     }
 
     .product-card {
@@ -30,7 +40,7 @@
 
     .product-card img {
       max-width: 100%;
-      height: auto;
+      height: 250px;
     }
 
     .btn {
@@ -47,11 +57,33 @@
       background-color: #dc3545;
       color: white;
     }
+    .save-btn{
+      border: 1px solid #2da010;
+      border-radius: 10px;
+      background-color: #2da010;
+      color: #fefdfd
+
+    }
+    @media screen and (max-width: 427px) {
+      
+      body {
+      font-family: Arial;
+      padding: 0px;
+    }
+    .product-card {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding:0px;
+      margin-bottom: 10px;
+    }
+
+    }
+
   </style>
 </head>
 <body>
 
-<h2>Upload New Product</h2>
+
 <form id="productForm" enctype="multipart/form-data">
   <input type="hidden" name="productId">
   <input type="text" name="category" placeholder="Category" required>
@@ -60,11 +92,15 @@
   <input type="number" name="price" placeholder="Price" required>
   <input type="number" name="quantity" placeholder="Quantity" required>
   <input type="file" name="image" accept="image/*">
-  <button type="submit">Save Product</button>
+  <button class="save-btn" type="submit">Save Product</button>
 </form>
 
-<h2>All Products</h2>
-<div class="product-list" id="productList"></div>
+<h2 class="mt-5">All Products</h2>
+<div class="container">
+  <div class="row" id="productList"></div>
+</div>
+
+
 
 <script>
   const form = document.getElementById('productForm');
@@ -75,12 +111,12 @@
     e.preventDefault();
 
     const formData = new FormData(form);
-    const url = editingProductId
-      ? `http://localhost:8080/admin/products/${editingProductId}`
-      : 'http://localhost:8080/admin/upload';
-      // const url = editingProductId
-      // ? `https://ecommerce-backend-wnu9.onrender.com/admin/products/${editingProductId}`
-      // : 'https://ecommerce-backend-wnu9.onrender.com/admin/upload';
+    // const url = editingProductId
+    //   ? `http://localhost:8080/admin/products/${editingProductId}`
+    //   : 'http://localhost:8080/admin/upload';
+      const url = editingProductId
+      ? `https://ecommerce-backend-wnu9.onrender.com/admin/products/${editingProductId}`
+      : 'https://ecommerce-backend-wnu9.onrender.com/admin/upload';
 
     const method = editingProductId ? 'PUT' : 'POST';
 
@@ -107,22 +143,28 @@
     const products = await res.json();
     productList.innerHTML = '';
 
-    products.forEach(p => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      card.innerHTML = `
-      ${p.imageUrl ? `<img src="http://localhost:8080${p.imageUrl}" alt="${p.title}">` : ''}
-        <h3>${p.title}</h3>
-        <p><strong>Category:</strong> ${p.category}</p>
-        <p>${p.description}</p>
-        <p><strong>Price:</strong> ₹${p.price}</p>
-        <p><strong>Quantity:</strong> ${p.quantity}</p>
-        
-        <button class="btn btn-update" onclick='editProduct(${JSON.stringify(p)})'>Update</button>
-        <button class="btn btn-delete" onclick='deleteProduct("${p.id}")'>Delete</button>
-      `;
-      productList.appendChild(card);
-    });
+products.forEach(p => {
+  const card = document.createElement('div');
+  card.className = 'col-6 col-md-4 mb-4'; // col-* should be the grid column, not custom card
+
+  card.innerHTML = `
+    <div class="product-card  border rounded">
+      ${p.imageUrl ? `<img src="http://localhost:8080${p.imageUrl}" alt="${p.title}" class="img-fluid">` : ''}
+      <h3 class="mt-3 ps-3">${p.title}</h3>
+      <p class="ps-3"><strong>Category:</strong> ${p.category}</p>
+      <p class="ps-3">${p.description}</p>
+      <p class="ps-3"><strong>Price:</strong> ₹${p.price}</p>
+      <p class="ps-3"><strong>Quantity:</strong> ${p.quantity}</p>
+      <div class="d-flex justify-content-between gap-2 px-2">
+      <button class="btn btn-sm btn-primary " onclick='editProduct(${JSON.stringify(p)})'>Update</button>
+      <button class="btn btn-sm btn-danger" onclick='deleteProduct("${p.id}")'>Delete</button>
+      </div>
+    </div>
+  `;
+
+  productList.appendChild(card);
+});
+
   }
 
   function editProduct(p) {
@@ -154,6 +196,9 @@
   // Load on page load
   loadProducts();
 </script>
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  <script src="js/index.js" ></script>
 
 </body>
 </html>

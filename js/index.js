@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   <div class="col-6 col-md-5 quantity d-none d-md-block">
                     <label>Qty: <input type="number" id="qty-${index}" min="1" value="1"></label><br><br>
                   </div>
-                  <div class="col-12 col-md-7 price">$${product.price}</div>
+                  <div class="col-12 col-md-7 price">₹${product.price}</div>
                 </div>
                 <div class="buttons">
                   <button class="view-details d-none d-md-block"
@@ -245,7 +245,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     Add to Cart
                   </button>
                   <button class="view-details d-block d-md-none"
-                    onclick="redirectToDetails('${product.title}', ${product.price}, 'qty-${index}', '${product.imageUrl}', \`${product.description}\`)"
+                    onclick="redirectToDetails('${product.title}', ${product.price}, 'qty-${index}', '${product.imageUrl}', \`${product.description}\`)">
                     <span class="material-symbols-outlined">visibility</span>
                   </button>
                   <button class="add-to-cart d-block d-md-none"

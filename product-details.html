@@ -62,6 +62,53 @@
       align-items: center;
 
     }
+    #checkoutModal {
+      background-color: #333;
+    }
+    #paymentDetails{
+      background-color: #333;
+    }
+    #paymentDetails .modal-dialog{
+      margin: 10% auto;
+    }
+      /* Center the modal vertically */
+  #checkoutModal .modal-dialog {
+    margin: 0% auto;
+    max-width: 500px;
+  }
+
+  /* Style the modal box */
+  #checkoutModal .modal-content {
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    background-color: #f9f9f9;
+  }
+
+  /* Header styling */
+  #checkoutModal h4 {
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  /* Input fields */
+  #checkoutModal input,
+  #checkoutModal textarea {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  /* Buttons */
+  #checkoutModal .btn-primary {
+    background-color: #2da010;
+    border-radius: 8px;
+  }
+
+  #checkoutModal .btn-secondary {
+     background-color:#f65005;
+    border-radius: 8px;
+  }
     @media screen and (max-width: 425px) {
       .product-detail  h3{
       font-size: 2rem;
@@ -109,6 +156,39 @@
   
   <div class="product-detail mt-5" id="product-detail"></div>
   <div class="bottom-option d-md-none d-block fixed-bottom" id="bottom-option"></div>
+
+  <!-- HTML: Hidden Address Form -->
+<!-- Step 1: Address Form -->
+<div id="checkoutModal" class="modal" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <h4>Enter Delivery Address</h4>
+      <input type="text" id="custName" placeholder="Full Name" class="form-control mb-2" />
+      <input type="text" id="custPhone" placeholder="Phone Number" class="form-control mb-2" />
+      <input type="text" id="custAltPhone" placeholder="Alternate Number" class="form-control mb-2" />
+      <input type="text" id="custPincode" placeholder="Pincode" class="form-control mb-2" />
+      <textarea id="custAddress" placeholder="Full Address" class="form-control mb-2"></textarea>
+      <input type="text" id="custState" placeholder="State" class="form-control mb-2" />
+      <input type="text" id="custDistrict" placeholder="District" class="form-control mb-2" />
+      <button class="btn btn-primary" onclick="saveAddressAndProceed()">Next</button>
+      <button class="btn btn-secondary mt-2" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Step 2: Payment Details -->
+<div id="paymentDetails" class="modal" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <h4>Payment Details</h4>
+      <div id="paymentCard"></div>
+      <button class="btn btn-success mt-3" onclick="placeOrderFinal('ONLINE')">Pay Online</button>
+      <button class="btn btn-warning mt-2" onclick="placeOrderFinal('COD')">Cash on Delivery</button>
+    </div>
+  </div>
+</div>
+
+
 
   
 
@@ -164,74 +244,151 @@ if (name && price && image && quantity && description) {
       document.getElementById('product-detail').textContent = 'Product details missing.';
     }
 
-    // Function to handle Buy Now
- function buyNow(name, price, qtyInputId) {
+   // Function to handle Buy Now
+function buyNow(productName, price, qtyInputId) {
   const qty = parseInt(document.getElementById(qtyInputId).value) || 1;
+  window.currentProduct = { name: productName, price: price, qty: qty };
+
+  // Show address form first
+  document.getElementById("checkoutModal").style.display = "block";
+}
+
+// Step 1 → Save Address to DB
+function saveAddressAndProceed() {
+  const addressData = {
+    name: document.getElementById("custName").value,
+    phone: document.getElementById("custPhone").value,
+    altPhone: document.getElementById("custAltPhone").value,
+    pincode: document.getElementById("custPincode").value,
+    address: document.getElementById("custAddress").value,
+    state: document.getElementById("custState").value,
+    district: document.getElementById("custDistrict").value
+  };
+
+  // Basic validation
+  if (!addressData.name || !addressData.phone || !addressData.address) {
+    alert("Please fill all required fields.");
+    return;
+  }
+
+  // Save in DB
+const token = localStorage.getItem("token");
+
+// fetch("http://localhost:8080/admin/update-address", 
+fetch("https://ecommerce-backend-wnu9.onrender.com/admin/update-address",{
+  method: "PUT",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`
+  },
+  body: JSON.stringify(addressData)
+})
+  .then(res => {
+    if (!res.ok) throw new Error("Failed to save address");
+    return res.text();
+  })
+  .then(msg => console.log(msg))
+  .catch(err => alert("Error saving address: " + err.message));
+  document.getElementById("checkoutModal").style.display = "none";
+ showPaymentDetails()
+}
+
+// Step 2 → Show Payment Details Card
+function showPaymentDetails() {
+  const { name, price, qty } = window.currentProduct;
   const totalAmount = price * qty;
 
-  fetch('https://ecommerce-backend-wnu9.onrender.com/api/payment/create-order', {
-  // fetch('http://localhost:8080/api/payment/create-order', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+  document.getElementById("paymentCard").innerHTML = `
+    <div class="card p-3">
+      <p><strong>Product:</strong> ${name}</p>
+      <p><strong>Quantity:</strong> ${qty}</p>
+      <p><strong>Total Amount:</strong> ₹${totalAmount}</p>
+    </div>
+  `;
+  document.getElementById("paymentDetails").style.display = "block";
+}
+
+// Step 3 → Place Order
+function placeOrderFinal(paymentType) {
+  const { name, price, qty } = window.currentProduct;
+  const totalAmount = price * qty;
+
+  if (paymentType === "COD") {
+    // fetch("http://localhost:8080/api/orders/save",
+    fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders/save", {
+      method: "POST",
+      headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("token")
+         },
+      credentials: "include",
+      body: JSON.stringify({
+        productName: name,
+        price: price,
+        quantity: qty,
+        paymentType: "COD",
+        status: "PENDING"
+      })
+    }).then(() => {
+      alert("Order placed successfully (COD)!");
+      closePayment();
+    });
+    return;
+  }
+
+  // Razorpay Online Payment
+  // fetch("http://localhost:8080/api/payment/create-order",
+  fetch("https://ecommerce-backend-wnu9.onrender.com/api/payment/create-order",  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ amount: totalAmount })
   })
   .then(res => res.json())
   .then(orderData => {
     const options = {
-      key: "rzp_test_qoebkgBWvtmZQw", // Replace with your real Key ID
+      key: "rzp_test_qoebkgBWvtmZQw", // Razorpay Key
       amount: orderData.amount,
       currency: "INR",
-      name: "Devwerx Software Solution",
+      name: "My Shop",
       description: name,
-      image: "https://your-logo-url.png", // Optional
       order_id: orderData.id,
-
-      // ✅ ADD YOUR HANDLER FUNCTION HERE
       handler: function (response) {
-        const qty = parseInt(document.getElementById(qtyInputId).value) || 1;
-
-        const orderDetails = {
-          productName: name,
-          price: price,
-          quantity: qty,
-          orderId: response.razorpay_order_id,
-          paymentId: response.razorpay_payment_id,
-          status: "paid"
-        };
-
+        // fetch("http://localhost:8080/api/orders/save",
         fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders/save", {
-        // fetch("http://localhost:8080/api/orders/save", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(orderDetails)
-        })
-        .then(res => res.json())
-        .then(data => {
-          alert("Payment successful and order saved!");
-        })
-        .catch(err => console.error("Order save failed", err));
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            productName: name,
+            price: price,
+            quantity: qty,
+            orderId: response.razorpay_order_id,
+            paymentId: response.razorpay_payment_id,
+            paymentType: "ONLINE",
+            status: "PAID"
+          })
+        }).then(() => {
+          alert("Order placed successfully!");
+          closePayment();
+        });
       },
-
-      prefill: {
-        name: "Customer Name",
-        email: "customer@example.com",
-        contact: "9087678909"
-      },
-      theme: {
-        color: "#3399cc"
-      }
+      theme: { color: "#3399cc" }
     };
-
-    const rzp = new Razorpay(options);
-    rzp.open();
-  })
-  .catch(err => console.error("Error creating Razorpay order:", err));
+    new Razorpay(options).open();
+  });
 }
 
+function closeModal() {
+  document.getElementById("checkoutModal").style.display = "none";
+}
+
+function closePayment() {
+  document.getElementById("paymentDetails").style.display = "none";
+}
+
+// Close modal function
+function closeModal() {
+  document.getElementById("checkoutModal").style.display = "none";
+}
 
     // Function to handle Add to Cart
     function addToCart(name, price, qtyInputId, image) {
