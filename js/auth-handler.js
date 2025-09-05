@@ -1,5 +1,5 @@
-// const API_BASE = 'http://localhost:8080/auth';
-const API_BASE = 'https://ecommerce-backend-wnu9.onrender.com/auth';
+const API_BASE = 'http://localhost:8080/auth';
+// const API_BASE = 'https://ecommerce-backend-wnu9.onrender.com/auth';
 
 const signupForm = document.getElementById('signupForm');
 const usernameInput = document.getElementById('signupUsername');
@@ -8,6 +8,11 @@ const passwordInput = document.getElementById('signupPassword');
 const confirmInput = document.getElementById('confirmPassword');
 const signupBtn = document.getElementById('signupBtn');
 const signupLoader = document.getElementById('signupLoader'); // ✅ Loader reference
+const usernameSpan = document.getElementById("usernameDisplay");
+const logoutBtn = document.getElementById("logoutDesktop");
+const logoutBtnMobile = document.getElementById("logoutMobile");
+
+
 
 if (signupForm && signupBtn && signupLoader) {
   // Disable initially
@@ -57,21 +62,67 @@ if (signupForm && signupBtn && signupLoader) {
         body: JSON.stringify({ username, email, password })
       });
 
-      const data = await res.text();
+      const data = await res.json();
 
-      if (res.ok) {
-        usernameInput.value = '';
-        emailInput.value = '';
-        passwordInput.value = '';
-        confirmInput.value = '';
-        alert(data);
+   
+        if (res.ok) {
+            // ✅ Save token + username in localStorage
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username",data.username);
 
-        setTimeout(() => {
-           window.location.href = 'index.html';
-        }, 3000);
-      } else {
-        alert("Signup failed: " + data);
-      }
+          usernameInput.value = '';
+          emailInput.value = '';
+          passwordInput.value = '';
+          confirmInput.value = '';
+
+          // ✅ Show username on website if span exists
+        if (usernameSpan) {
+          usernameSpan.textContent = data.username;
+        
+          console.log("username====",data.username);
+          document.querySelector(".ps-5").style.display = "block";
+
+          
+        }
+       
+         // ✅ Show logout button (desktop)
+       if (logoutBtn) {
+         logoutBtn.style.display = "block";
+          console.log("✅ Logout button displayed");
+       } else {
+            console.error("❌ Logout button not found in DOM");
+        }
+
+      
+        // Mobile WELCOME
+    const profileCircleMobile = document.getElementById("profileCircleMobile");
+    const usernameDisplayMobile = document.getElementById("usernameDisplayMobile");
+    const mobileProfile = document.getElementById("mobileProfile");
+
+    if (profileCircleMobile && usernameDisplayMobile && mobileProfile) {
+      const firstLetter = data.username.charAt(0).toUpperCase();
+      profileCircleMobile.textContent = firstLetter;
+      usernameDisplayMobile.textContent = data.username;
+      mobileProfile.style.display = "block"; // ✅ unhide mobile welcome
+    }
+
+    // mobilelogout ------->
+     if (logoutBtnMobile) {
+         logoutBtnMobile.style.display = "block";
+          console.log("✅ Logout button displayed");
+       } 
+
+      
+
+        alert("Signup successful! Welcome " + data.username);
+
+
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 3000);
+        } else {
+          alert("Signup failed: " + data);
+        }
     } catch (error) {
       alert("Error occurred: " + error.message);
     } finally {
@@ -84,15 +135,98 @@ if (signupForm && signupBtn && signupLoader) {
 
 
 // ====== LOGIN ======
+// const usernameLoginInput = document.getElementById("loginUsername");
+// const passwordLoginInput = document.getElementById("loginPassword");
+// const loginBtn = document.getElementById("loginBtn");
+// const loginForm = document.getElementById("loginForm");
+// const loginLoader = document.getElementById("loginLoader");
+// const showusername =document. getElementById("usernameDisplay");
+
+// if (usernameLoginInput && passwordLoginInput && loginBtn && loginForm) {
+//   function checkInputs() {
+//     const isFilled = usernameLoginInput.value.trim() !== "" && passwordLoginInput.value.trim() !== "";
+//     loginBtn.disabled = !isFilled;
+//     loginBtn.style.backgroundColor = isFilled ? "rgb(8, 213, 240)" : "#252525";
+//     loginBtn.style.color = isFilled ? "black" : "white";
+//     loginBtn.style.fontWeight = isFilled ? "600" : "normal";
+//   }
+
+//   usernameLoginInput.addEventListener("input", checkInputs);
+//   passwordLoginInput.addEventListener("input", checkInputs);
+
+//   loginForm.addEventListener('submit', async (e) => {
+//     e.preventDefault();
+//     const username = usernameLoginInput.value;
+//     const password = passwordLoginInput.value;
+
+//     try {
+//       const res = await fetch(`${API_BASE}/login`, {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({ username, password })
+//       });
+
+//       if (!res.ok) {
+//         const errorText = await res.text();
+
+//          showusername.textContent = data.username;
+         
+//         throw new Error(errorText || 'Login failed');
+//       }
+
+//       const data = await res.json();
+//       if (data.token) {
+//         if (loginLoader) loginLoader.style.display = "flex";
+
+//         setTimeout(() => {
+//            // ✅ Save token + username
+//         localStorage.setItem('token', data.token);
+//         localStorage.setItem('username', username);
+       
+
+//         // ✅ Show username on page
+//         document.getElementById("usernameDisplay").textContent =data.username;
+//         document.querySelector(".ps-5").style.display = "block"; // unhide welcome
+
+       
+
+
+
+//           usernameLoginInput.value = "";
+//           passwordLoginInput.value = "";
+//           checkInputs();
+//           window.location.href = 'index.html';
+//         }, 3000);
+//       } else {
+//         alert('Login failed: No token received');
+//       }
+//     } catch (err) {
+//       alert('Error: ' + err.message);
+//     }
+//   });
+// }
+
+// ====== LOGIN ======
 const usernameLoginInput = document.getElementById("loginUsername");
 const passwordLoginInput = document.getElementById("loginPassword");
 const loginBtn = document.getElementById("loginBtn");
 const loginForm = document.getElementById("loginForm");
 const loginLoader = document.getElementById("loginLoader");
 
+// Desktop
+const showUsername = document.getElementById("usernameDisplay");
+const profileCircle = document.getElementById("profileCircle");
+
+// Mobile
+const profileCircleMobile = document.getElementById("profileCircleMobile");
+const usernameDisplayMobile = document.getElementById("usernameDisplayMobile");
+const mobileProfile = document.getElementById("mobileProfile");
+
 if (usernameLoginInput && passwordLoginInput && loginBtn && loginForm) {
   function checkInputs() {
-    const isFilled = usernameLoginInput.value.trim() !== "" && passwordLoginInput.value.trim() !== "";
+    const isFilled =
+      usernameLoginInput.value.trim() !== "" &&
+      passwordLoginInput.value.trim() !== "";
     loginBtn.disabled = !isFilled;
     loginBtn.style.backgroundColor = isFilled ? "rgb(8, 213, 240)" : "#252525";
     loginBtn.style.color = isFilled ? "black" : "white";
@@ -102,39 +236,89 @@ if (usernameLoginInput && passwordLoginInput && loginBtn && loginForm) {
   usernameLoginInput.addEventListener("input", checkInputs);
   passwordLoginInput.addEventListener("input", checkInputs);
 
-  loginForm.addEventListener('submit', async (e) => {
+  loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const username = usernameLoginInput.value;
-    const password = passwordLoginInput.value;
+    const username = usernameLoginInput.value.trim();
+    const password = passwordLoginInput.value.trim();
 
     try {
       const res = await fetch(`${API_BASE}/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(errorText || 'Login failed');
+        throw new Error(data.message || "Login failed");
       }
 
-      const data = await res.json();
       if (data.token) {
         if (loginLoader) loginLoader.style.display = "flex";
 
         setTimeout(() => {
-          localStorage.setItem('token', data.token);
+          // ✅ Save token + username
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("username", data.username);
+
+          // ✅ Desktop Welcome
+          if (showUsername && profileCircle) {
+            showUsername.textContent = data.username;
+            profileCircle.textContent = data.username.charAt(0).toUpperCase();
+            document.querySelector(".ps-5").style.display = "block";
+          }
+
+          // ✅ Mobile Welcome
+          if (profileCircleMobile && usernameDisplayMobile && mobileProfile) {
+            profileCircleMobile.textContent =
+              data.username.charAt(0).toUpperCase();
+            usernameDisplayMobile.textContent = data.username;
+            mobileProfile.style.display = "flex"; // flex + gap (use CSS gap)
+          }
+
+          // ✅ Clear inputs
           usernameLoginInput.value = "";
           passwordLoginInput.value = "";
           checkInputs();
-          window.location.href = 'index.html';
+
+          // ✅ Redirect
+          window.location.href = "index.html";
         }, 3000);
       } else {
-        alert('Login failed: No token received');
+        alert("Login failed: No token received");
       }
     } catch (err) {
-      alert('Error: ' + err.message);
+      alert("Error: " + err.message);
     }
   });
 }
+
+// logout section------>
+async function logout() {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+
+  await fetch(`${API_BASE}/logout`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  });
+
+  // Clear local storage
+  localStorage.removeItem("token");
+  localStorage.removeItem("username");
+
+  // Redirect
+  window.location.href = "login.html";
+}
+
+
+
+
+
+
+
+
+

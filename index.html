@@ -46,6 +46,12 @@
         <span><i class='bx bxl-youtube'></i></span>
       </div>
     </div>
+    <!-- welcome to username on website -->
+   <div class="welcomename ps-5" style="display:none;">
+  <h2 class="m-0">WELCOME <span id="usernameDisplay" class="ms-1"></span></h2>
+</div>
+
+
     <!-- user base showed -->
     <div class="row py-2 border-bottom  d-block d-md-none" style="border-color: #808183;">
       <div class="nav-icons d-flex justify-content-around p-2 gap-3  ">
@@ -83,11 +89,15 @@
             <a class="nav-link" href="#">About</a>
             <!-- Add this inside your desktop navbar (e.g., inside .navbar-nav) -->
             <a id="adminLink" class="nav-link" href="admin.html" style="display: none;">Admin</a>
+            <!-- logout  -->
+            <a id="logoutDesktop" class="nav-link" style="display: none;" >Logout</a>
+
+
 
           </div>
           <div class="nav-icons d-flex justify-content-around gap-3 d-none d-md-block ">
             <span><i class='bx bx-search'></i></span>
-            <span><a href="signin.html"><i class='bx bxs-user'></i></a></span>
+            <span><a href="signup.html"><i class='bx bxs-user'></i></a></span>
             <span class="position-relative border" onclick="goToCartPage()" style="cursor: pointer;">
               <i class='bx bxs-cart' id="cartIcon"></i>
               <span id="cartCountBadge" class="cart-badge"></span>
@@ -104,6 +114,10 @@
       </div>
     </nav>
   </div>
+   <!-- loader for logout -->
+  <div class="container-fluid" id="logoutLoader" style="display:none;">
+<div class="spinner"></div>
+</div>
   <!-- Mobile Navbar -->
   <nav class="navbar d-md-none d-block">
     <div>
@@ -132,11 +146,22 @@
 
   </nav>
   <div class="nav-links d-md-none" id="navLinks">
+
+    <!-- welcome username inmobile view -->
+   <div id="mobileProfile" style="display:none;">
+  <div id="profileCircleMobile" class="profile-circle"></div>
+  <h2 class="m-0 d-flex justify-content-center align-items-center gap-2">WELCOME <span id="usernameDisplayMobile"></span></h2>
+</div>
+
     <a href="index.html" class="home" onclick="toggleMenu()">HOME</a>
     <a class="nav-link" href="features.html">FEATURES</a>
     <a class="nav-link" href="#">ABOUT</a>
     <!-- Inside the mobile nav-links -->
-    <a id="adminLinkMobile" class="nav-link" href="admin.html" style="display: none;">Admin</a>
+    <a id="adminLinkMobile" class="nav-link" href="admin.html" style="display: none;">ADMIN</a>
+    <!-- logout  -->
+   <a id="logoutMobile" class="nav-link" style="display: none;" >LOGOUT</a>
+    
+
 
   </div>
   <div class="container-fluid d-md-none d-block fixed-bottom border-top bottom-bar">
@@ -164,6 +189,7 @@
     </div>
   </div>
 
+ 
 
   <!-- carousel -->
   <div class="container-fluid p-0">
@@ -372,9 +398,110 @@
   <script src="js/index.js"></script>
 
  <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const savedUsername = localStorage.getItem("username");
+  if (savedUsername) {
+    // Desktop
+    const usernameSpan = document.getElementById("usernameDisplay");
+    if (usernameSpan) {
+      usernameSpan.textContent = savedUsername;
+      document.querySelector(".ps-5").style.display = "block";
+    }
+
+    // Mobile
+    const profileCircleMobile = document.getElementById("profileCircleMobile");
+    const usernameDisplayMobile = document.getElementById("usernameDisplayMobile");
+    const mobileProfile = document.getElementById("mobileProfile");
+
+    if (profileCircleMobile && usernameDisplayMobile && mobileProfile) {
+      const firstLetter = savedUsername.charAt(0).toUpperCase();
+      profileCircleMobile.textContent = firstLetter;
+      usernameDisplayMobile.textContent = savedUsername;
+      mobileProfile.style.display = "flex";
+      mobileProfile.style.gap = "10px"; 
+    }
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const logoutBtn = document.getElementById("logoutDesktop");
+  const logoutBtnMobile = document.getElementById("logoutMobile");
+  // Desktop
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => logout(logoutBtn));
+  }
+  // mobile
+   if (logoutBtnMobile) {
+    logoutBtnMobile.addEventListener("click", () => logout(logoutBtnMobile));
+  }
+});
+
+
+async function logout(logoutBtn, logoutBtnMobile) {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "signin.html";
+    return;
+  }
+
+  const logoutLoader = document.getElementById("logoutLoader");
+  if (logoutLoader) {
+    logoutLoader.style.display = "flex"; // show loader
+    logoutLoader.classList.add("justify-content-center", "align-items-center");
+  }
+
+  try {
+    const res = await fetch("http://localhost:8080/auth/logout", {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+
+    const message = await res.text(); // backend returns plain text
+
+    if (res.ok) {
+      // ✅ Logout success
+      localStorage.clear();
+      if (logoutBtn) logoutBtn.style.display = "none";
+      if (logoutBtnMobile) logoutBtnMobile.style.display = "none";
+
+      setTimeout(() => {
+        if (logoutLoader) logoutLoader.style.display = "none";
+        window.location.href = "signin.html";
+      }, 2000); // shorter loader effect
+    } else {
+      // ❌ Logout failed (token missing or server error)
+      alert("Logout failed: " + message);
+      if (logoutLoader) logoutLoader.style.display = "none";
+    }
+  } catch (err) {
+    console.error("Logout failed:", err);
+    alert("Logout error: " + err.message);
+    if (logoutLoader) logoutLoader.style.display = "none";
+  }
+}
+
+
+
+// logoutbtn showed 
+document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    // Desktop
+    const logoutBtn = document.getElementById("logoutDesktop");
+    if (logoutBtn) logoutBtn.style.display = "block";
+    // mobile
+    const logoutBtnMobile = document.getElementById("logoutMobile");
+    if (logoutBtnMobile) logoutBtnMobile.style.display = "block";
+  }
+});
+
+
+
+</script>
 <script src="js/auth-check.js"></script>
-
-
 </body>
 
 </html>
