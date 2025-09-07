@@ -31,8 +31,8 @@
 
   <script>
   
-    // fetch('https://ecommerce-backend-wnu9.onrender.com/admin/users')
-      fetch('http://localhost:8080/admin/users')
+    fetch('https://ecommerce-backend-wnu9.onrender.com/admin/users')
+      // fetch('http://localhost:8080/admin/users')
   .then(response => {
     if (!response.ok) {
       throw new Error("Network response was not OK");
@@ -62,7 +62,8 @@
 function deleteUser(userId) {
   if (confirm("Are you sure you want to delete this user?")) {
     // fetch(`http://localhost:8080/admin/${userId}`, 
-    fetch(`https://ecommerce-backend-wnu9.onrender.com/admin/${userId}`,{
+    fetch(`https://ecommerce-backend-wnu9.onrender.com/admin/${userId}`,
+    {
       method: 'DELETE'
     })
     .then(res => {

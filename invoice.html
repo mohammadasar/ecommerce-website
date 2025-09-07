@@ -27,8 +27,8 @@
 
   <script>
 async function loadOrders() {
-  const res = await fetch("http://localhost:8080/api/orders");
-    // const res = await fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders");
+  // const res = await fetch("http://localhost:8080/api/orders");
+    const res = await fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders");
   const orders = await res.json();
 
   let orderList = document.getElementById("orderList");
@@ -59,8 +59,8 @@ async function loadOrders() {
 
     function downloadInvoice(orderId) {
       // Open PDF in new tab or trigger download
-      window.open(`http://localhost:8080/api/orders/${orderId}/invoice`, "_blank");
-      // window.open(`https://ecommerce-backend-wnu9.onrender.com/api/orders/${orderId}/invoice`, "_blank");
+      // window.open(`http://localhost:8080/api/orders/${orderId}/invoice`, "_blank");
+      window.open(`https://ecommerce-backend-wnu9.onrender.com/api/orders/${orderId}/invoice`, "_blank");
     }
 
     // Load orders when page opens

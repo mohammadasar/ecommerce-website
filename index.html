@@ -454,7 +454,9 @@ async function logout(logoutBtn, logoutBtnMobile) {
   }
 
   try {
-    const res = await fetch("http://localhost:8080/auth/logout", {
+    // const res = await fetch("http://localhost:8080/auth/logout",
+    const res = await fetch("https://ecommerce-backend-wnu9.onrender.com/auth/logout",
+     {
       method: "POST",
       headers: { "Authorization": `Bearer ${token}` }
     });

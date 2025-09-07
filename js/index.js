@@ -196,8 +196,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const container = document.querySelector('.product-row');
 
   // Start both fetch and timer at the same time
-  const fetchPromise = fetch('http://localhost:8080/admin/products')
-  // const fetchPromise = fetch('https://ecommerce-backend-wnu9.onrender.com/admin/products')
+  // const fetchPromise = fetch('http://localhost:8080/admin/products')
+  const fetchPromise = fetch('https://ecommerce-backend-wnu9.onrender.com/admin/products')
     .then(res => res.json());
 
   const delayPromise = new Promise(resolve => setTimeout(resolve, 5000)); // ⏳ 5s delay
@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="product-card" onclick="viewDetails('${product.title}', ${product.price}, 'qty-${index}', '${product.description}')">
               <div class="product-image">
                 
-                 <img src="http://localhost:8080${product.imageUrl}" alt="${product.name}">
+                 <img src="${product.imageUrl}" alt="${product.name}"></img>
                 <div class="like-icon" onclick="event.stopPropagation(); toggleLike(this, '${product.title}', ${product.price}, 'qty-${index}', '${product.imageUrl}', '${product.description}')">
                   <i class='bx bx-heart'></i>
                 </div>
