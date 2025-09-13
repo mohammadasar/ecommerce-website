@@ -16,6 +16,11 @@
     <link href="css/index.css" rel="stylesheet">
 </head>
 <body class="container py-4">
+   <div class="back fixed-top">
+    <a href="#" onclick="goBack()" class="text-dark text-decoration-none">
+      <i class='bx bx-arrow-back'></i>
+      </a> Back to Products
+  </div>
   <h2 id="categoryTitle" class="mb-4"></h2>
   <div class="row" id="productList"></div>
 
@@ -89,6 +94,15 @@
    
 
     loadCategoryProducts();
+      // back to history page funciton
+    function goBack() {
+    if (document.referrer !== "") {
+      history.back();
+    } else {
+      // Fallback if no history (e.g., user opened page directly)
+      window.location.href = "index.html";
+    }
+  }
   </script>
    <script src="js/index.js"></script>
 </body>
