@@ -466,6 +466,72 @@ body{
   width: 100px;
   
 }
+/* searcing product input box styles */
+/* From Uiverse.io by OnlyCodeChannel */ 
+.searchBox {
+  display: flex;
+  max-width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  /* background: #2f3640; */
+  background:#1A1A1A;
+  border-radius: 50px;
+  position: relative;
+}
+
+.searchButton {
+  color: white;
+  position: absolute;
+  right: 8px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  /* background: var(--gradient-2, linear-gradient(90deg, #2AF598 0%, #009EFD 100%)); */
+    background: var(--gradient-2, linear-gradient(90deg, #3CB815 0%, #F65005 100%));
+
+  border: 0;
+  display: inline-block;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+}
+/* search product listing */
+
+.search-results ul { list-style: none; margin: 0; padding: 0; }
+.search-results li {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f1f1;
+}
+.search-results li:hover,
+.search-results li.active { background: #f8f9fa; }
+.search-error, .no-results { padding: 8px 12px; color: #666; }
+/*hover effect*/
+button:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 10px 20px;
+  transform: translateY(-3px);
+}
+/*button pressing effect*/
+button:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.searchInput {
+  border: none;
+  background: none;
+  outline: none;
+  color: #3CB815 !important;
+  font-size: 20px;
+  padding: 24px 46px 24px 26px;
+}
+.searchInput::placeholder {
+  color: #3CB815 !important; /* green placeholder */
+  opacity: 1; /* make sure it's visible */
+}
+
+
 .product-container .heading{
   font-family: "Lora", serif;
   font-size: 48px;
@@ -1177,6 +1243,52 @@ body{
 }
 .product-info {
   padding: 8px;
+}
+/* searching input */
+.searchInput {
+  border: none;
+  background: none;
+  outline: none;
+  color: #3CB815 !important;
+  font-size: 14px;
+  padding: 20px 40px 20px 20px;
+}
+.searchBox {
+  max-width: 90%;
+  margin: 0 auto;          /* center horizontally */
+  
+}
+.searchButton {
+  color: white;
+  position: absolute;
+  right: 5px;
+  width: 26px;   /* smaller width */
+  height: 26px;  /* smaller height */
+  border-radius: 50%;
+  background: var(--gradient-2, linear-gradient(90deg, #3CB815 0%, #F65005 100%));
+  border: 0;
+  display: inline-flex;   /* better centering */
+  justify-content: center;
+  align-items: center;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+}
+.searchButton svg {
+  width: 18px;   /* scale down icon */
+  height: 18px;
+}
+.searchButton {
+  color: white;
+  position: absolute;
+  right: 8px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  /* background: var(--gradient-2, linear-gradient(90deg, #2AF598 0%, #009EFD 100%)); */
+    background: var(--gradient-2, linear-gradient(90deg, #3CB815 0%, #F65005 100%));
+
+  border: 0;
+  display: inline-block;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
 }
 .product-container .para{
   font-size: 16px;

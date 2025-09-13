@@ -196,8 +196,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const container = document.querySelector('.product-row');
 
   // Start both fetch and timer at the same time
-  // const fetchPromise = fetch('http://localhost:8080/admin/products')
-  const fetchPromise = fetch('https://ecommerce-backend-wnu9.onrender.com/admin/products')
+  const fetchPromise = fetch('http://localhost:8080/admin/products')
+  // const fetchPromise = fetch('https://ecommerce-backend-wnu9.onrender.com/admin/products')
     .then(res => res.json());
 
   const delayPromise = new Promise(resolve => setTimeout(resolve, 5000)); // ⏳ 5s delay
@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="product-card" onclick="viewDetails('${product.title}', ${product.price}, 'qty-${index}', '${product.description}')">
               <div class="product-image">
                 
-                 <img src="${product.imageUrl}" alt="${product.name}"></img>
+                <img src="http://localhost:8080${product.imageUrl}" alt="${product.name}">
                 <div class="like-icon" onclick="event.stopPropagation(); toggleLike(this, '${product.title}', ${product.price}, 'qty-${index}', '${product.imageUrl}', '${product.description}')">
                   <i class='bx bx-heart'></i>
                 </div>
@@ -266,3 +266,174 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+
+
+ // searching products
+//   // const response = await fetch(`https://ecommerce-backend-wnu9.onrender.com/admin/search?keyword=${keyword}`);
+
+//   async function searchProducts() {
+//   const keyword = document.getElementById("searchInput").value.trim();
+
+//   if (keyword.length === 0) {
+//     document.getElementById("results").innerHTML = "";
+//     document.getElementById("productDetails").innerHTML = "";
+//     return;
+//   }
+
+//   try {
+//     const response = await fetch(`http://localhost:8080/admin/search?keyword=${keyword}`);
+//     if (!response.ok) throw new Error("Failed to fetch");
+
+//     const products = await response.json();
+
+//     let output = "<ul>";
+//     products.forEach(p => {
+//       output += `<li onclick="selectProduct('${p.id}', '${p.title}', '${p.description}', ${p.price}, '${p.imageUrl || ''}')">
+//                    ${p.title}
+//                  </li>`;
+//     });
+//     output += "</ul>";
+
+//     document.getElementById("results").innerHTML = output;
+//   } catch (error) {
+//     console.error(error);
+//     document.getElementById("results").innerHTML = "<p style='color:red;'>Error loading products</p>";
+//   }
+// }
+
+let currentFocus = -1;
+
+
+// async function searchProducts() {
+//   const keyword = document.getElementById("searchInput").value.trim();
+//   const resultsBox = document.getElementById("results");
+
+//   if (keyword.length === 0) {
+//     resultsBox.innerHTML = "";
+//     return;
+//   }
+
+//   try {
+//     const response = await fetch(`http://localhost:8080/admin/search?keyword=${keyword}`);
+//     const products = await response.json();
+
+//     let output = "";
+
+//     // ✅ If products found, group by category
+//     const categories = new Set(products.map(p => p.category));
+
+//     categories.forEach((cat, index) => {
+//       output += `
+//         <li class="list-group-item list-group-item-action"
+//             onclick="redirectToCategory('${cat}')"
+//             data-index="${index}">
+//             <strong>${cat}</strong>
+//         </li>`;
+//     });
+
+//     resultsBox.innerHTML = output;
+//     currentFocus = -1; // reset
+    
+//   } catch (error) {
+//     console.error("Search error:", error);
+//   }
+// }
+async function searchProducts() {
+  const keyword = document.getElementById("searchInput").value.trim();
+  const resultsBox = document.getElementById("results");
+
+  if (keyword.length === 0) {
+    resultsBox.innerHTML = "";
+    currentFocus = -1; // also reset here
+    return;
+  }
+
+  try {
+    const response = await fetch(`http://localhost:8080/admin/search?keyword=${keyword}`);
+    const products = await response.json();
+
+    let output = "";
+
+    // ✅ If products found, group by category
+    const categories = new Set(products.map(p => p.category));
+
+    categories.forEach((cat, index) => {
+      output += `
+        <li class="list-group-item list-group-item-action"
+            onclick="redirectToCategory('${cat}')"
+            data-index="${index}">
+            <strong>${cat}</strong>
+        </li>`;
+    });
+
+    resultsBox.innerHTML = output;
+
+    // ✅ Reset everything on new search
+    currentFocus = -1;
+    removeActive(resultsBox.getElementsByTagName("li"));
+
+  } catch (error) {
+    console.error("Search error:", error);
+  }
+}
+
+
+function redirectToCategory(category) {
+  const clickedItem = document.querySelector(`[onclick="redirectToCategory('${category}')"]`);
+  if (clickedItem) {
+    document.getElementById("searchInput").value = clickedItem.innerText; // keep category name in input
+  }
+  window.location.href = `category.html?name=${encodeURIComponent(category)}`;
+}
+
+
+function handleKeyNavigation(e) {
+  const resultsBox = document.getElementById("results");
+  const items = resultsBox.getElementsByTagName("li");
+
+  if (e.key === "ArrowDown") {
+    currentFocus++;
+    addActive(items);
+  } else if (e.key === "ArrowUp") {
+    currentFocus--;
+    addActive(items);
+  } else if (e.key === "Enter") {
+    e.preventDefault();
+    if (currentFocus > -1 && items[currentFocus]) {
+      items[currentFocus].click();
+    }
+  } else {
+    searchProducts(); // normal typing triggers search
+  }
+}
+
+function addActive(items) {
+  if (!items) return;
+  removeActive(items);
+  if (currentFocus >= items.length) currentFocus = 0;
+  if (currentFocus < 0) currentFocus = items.length - 1;
+  items[currentFocus].classList.add("active");
+}
+
+function removeActive(items) {
+  for (let i = 0; i < items.length; i++) {
+    items[i].classList.remove("active");
+  }
+}
+function goToCategory() {
+  const keyword = document.getElementById("searchInput").value.trim();
+  if (!keyword) return;
+
+  // ✅ Redirect directly
+  redirectToCategory(keyword);
+}
+
+
+// ✅ Hide dropdown when clicking outside
+document.addEventListener("click", function(event) {
+  const searchBox = document.querySelector(".searchBox");
+  const resultsBox = document.getElementById("results");
+  if (!searchBox.contains(event.target)) {
+    resultsBox.innerHTML = "";
+  }
+});

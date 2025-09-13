@@ -95,7 +95,8 @@ function showUpdateForm(id, currentUsername, currentEmail) {
     };
 
     // fetch(`http://localhost:8080/admin/${id}`,
-    fetch(`https://ecommerce-backend-wnu9.onrender.com/admin/${id}`, {
+    fetch(`https://ecommerce-backend-wnu9.onrender.com/admin/${id}`, 
+    {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

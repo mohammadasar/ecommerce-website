@@ -11,10 +11,10 @@
   <title>Product Details</title>
   <style>
     .product-detail {
-      border: 1px solid #ccc;
+      /* border: 1px solid #ccc; */
       padding: 15px 20px;
       margin-top: 20px;
-      border-radius: 10px;
+      /* border-radius: 10px; */
     }
     .btn {
       margin-top: 10px;
@@ -109,7 +109,11 @@
      background-color:#f65005;
     border-radius: 8px;
   }
-    @media screen and (max-width: 425px) {
+    @media screen and (max-width: 430px) {
+      .card-row{
+        height: 100vh;
+        margin-bottom: 130px;
+      }
       .product-detail  h3{
       font-size: 2rem;
     }
@@ -129,12 +133,12 @@
     }
     .product-detail {
       position: relative;
-      border: 1px solid #ccc;
       padding: 15px 20px;
       margin-top: 70px;
-      margin-bottom: 120px;
-      border-radius: 10px;
+      
+      
     }
+   
      .bottom-option .btn{
       width: 47%;
       padding: 10px 0px;
@@ -155,7 +159,7 @@
   </div>
   
   <div class="product-detail mt-5" id="product-detail"></div>
-  <div class="bottom-option d-md-none d-block fixed-bottom" id="bottom-option"></div>
+  <div class="bottom-option d-md-none d-block fixed-bottom" id="bottom-option-mobile"></div>
 
   <!-- HTML: Hidden Address Form -->
 <!-- Step 1: Address Form -->
@@ -203,7 +207,7 @@ const image = decodeURIComponent(params.get('image'));
 if (name && price && image && quantity && description) {
   const container = document.getElementById('product-detail');
   container.innerHTML = `
-    <div class="row">
+    <div class="row card-row ">
       <div class="col-12 col-md-6 position-relative p-0">
         <img src="${image}" alt="${name}"><br>
         <div class="like-icon">
@@ -219,13 +223,20 @@ if (name && price && image && quantity && description) {
           <input type="number" id="qty-input" value="${quantity}" min="1">
         </label><br>
         </div>
-        <div class="bottom-option d-md-block d-block" id="bottom-option"></div>
+        <div class="bottom-option d-md-block d-none" id="bottom-option-desk"></div>
       </div>
     </div>
   `;
 
-  const container1 = document.getElementById('bottom-option');
+  const container1 = document.getElementById('bottom-option-desk');
   container1.innerHTML = `
+    <div class="d-flex flex-row justify-content-between">
+      <button class="btn add-btn" onclick="addToCart('${name}', ${price}, 'qty-input', '${image}')">Add to Cart</button>
+      <button class="btn buy-btn" onclick="buyNow('${name}', ${price}, 'qty-input')">Buy Now</button>
+    </div>
+  `;
+   const container2 = document.getElementById('bottom-option-mobile');
+  container2.innerHTML = `
     <div class="d-flex flex-row justify-content-between">
       <button class="btn add-btn" onclick="addToCart('${name}', ${price}, 'qty-input', '${image}')">Add to Cart</button>
       <button class="btn buy-btn" onclick="buyNow('${name}', ${price}, 'qty-input')">Buy Now</button>
