@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Category Products</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
@@ -14,9 +14,8 @@
     href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Gideon+Roman&family=Heebo:wght@100..900&family=Lora:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto+Slab:wght@100..900&display=swap"
     rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
-
     <style>
-       .back{
+            .back{
       background-color: #000000;
       color: #2da010;
       padding: 8px 10px;
@@ -28,18 +27,15 @@
       align-items: center;
 
     }
-    .back i{
+      .back i{
         color: #2da010;
-        font-size: 50px;
       }
-      #categoryTitle{
-      margin-top: 45px;
-    }
-
-    @media screen and (max-width: 430px) {
-
-     .back{
-      background-color: #0b0b0b;
+   @media screen and (max-width: 430px) {
+         .product-row{
+               margin: 0;
+         }
+      .back{
+      background-color: #000000;
       color: #2da010;;
       padding: 8px 10px;
       font-size: 24px;
@@ -52,42 +48,60 @@
       .back i{
         color: #2da010;
       }
-    #categoryTitle{
-      margin-top: 40px;
-    }
-
-    }
+}
     </style>
 </head>
-<body class="container py-4">
-   <div class="back fixed-top">
+<body>
+    <!-- back btn -->
+    <div class="back fixed-top">
     <a href="#" onclick="goBack()" class="text-dark text-decoration-none">
       <i class='bx bx-arrow-back'></i>
       </a> Back to Products
   </div>
-  <h2 id="categoryTitle" class="mb-4"></h2>
-  <div class="row" id="productList"></div>
 
-  <script>
-    async function loadCategoryProducts() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const category = urlParams.get("name");
-      document.getElementById("categoryTitle").innerText = "Products in " + category;
+     <p class="heading text-center  mt-5 mb-2">all-Products</p>
+    <div class="row product-row px-4 mb-5 ">
+      <!-- loader -->
+       <div id="loader" class="d-flex justify-content-center align-items-center m-5">
+         <div class="loader"></div>
+<p class="loader-text m-0">
+  <span>L</span><span>o</span><span>a</span><span>d</span><span>i</span><span>n</span><span>g</span><span>.</span><span>.</span><span>.</span>
+</p>
+         </div>
+          
 
-      // const response = await fetch(`http://localhost:8080/admin/category/${category}`);
-      const response = await fetch(`https://ecommerce-backend-wnu9.onrender.com/admin/category/${category}`);
-      const products = await response.json();
+    </div>
+  </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+  const loader = document.getElementById("loader");
+  const container = document.querySelector('.product-row');
 
-      const container = document.getElementById("productList");
-      container.innerHTML = "";
+  // Start both fetch and timer at the same time
+  // const fetchPromise = fetch('http://localhost:8080/admin/products')
+  const fetchPromise = fetch('https://ecommerce-backend-wnu9.onrender.com/admin/products')
+    .then(res => res.json());
+
+  const delayPromise = new Promise(resolve => setTimeout(resolve, 2000)); // ⏳ 5s delay
+
+  Promise.all([fetchPromise, delayPromise])
+    .then(([products]) => {
+      if (!Array.isArray(products)) {
+        loader.innerHTML = "Failed to load products.";
+        return;
+      }
+
+      loader.style.display = "none"; // ✅ hide after 5s and fetch complete
+      container.innerHTML = ''; // clear any loader inside
+
       
-      // this is for local
-      // <img src="http://localhost:8080${product.imageUrl}" alt="${product.name}">
-      // this is for live
-      // <img src="${product.imageUrl}" alt="${product.name}"></img>
+
+// <img src="http://localhost:8080${product.imageUrl}" alt="${product.name}">
+//<img src="${product.imageUrl}" alt="${product.name}"></img>
       products.forEach((product, index) => {
         const html = `
-        <div class="col-6 col-md-4 d-flex justify-content-center mt-md-3 mt-4">
+          <div class="col-6 col-md-4 d-flex justify-content-center mt-md-3 mt-4">
             <div class="product-card" onclick="viewDetails('${product.title}', ${product.price}, 'qty-${index}', '${product.description}')">
               <div class="product-image">
                 
@@ -130,25 +144,24 @@
           </div>
         `;
         container.insertAdjacentHTML('beforeend', html);
-      });
-    }
-
   
-
+      });
+      
    
-
-    loadCategoryProducts();
-
-      // back to history page funciton
-    function goBack() {
+    })
+    .catch(err => {
+      loader.innerHTML = "Failed to load products.";
+      console.error('Error:', err);
+    });
+});
+ function goBack() {
     if (document.referrer !== "") {
       history.back();
     } else {
       // Fallback if no history (e.g., user opened page directly)
       window.location.href = "index.html";
     }
-  }
-  </script>
-   <script src="js/index.js"></script>
+}
+    </script>
 </body>
 </html>

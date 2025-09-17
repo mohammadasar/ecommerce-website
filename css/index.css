@@ -1080,7 +1080,13 @@ button:active {
 .nav-links a:hover {
   background-color: #f0f0f0;
 }
-
+.nav-link:focus,
+.nav-link:active,
+.nav-link:hover {
+  color: inherit !important;   /* prevent blue color */
+  outline: none !important;    /* remove border/outline */
+  background-color: transparent !important; /* no bg change */
+}
 /* user-icon */
 
 .toggle-bar i{

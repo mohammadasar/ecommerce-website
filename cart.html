@@ -72,31 +72,74 @@
       font-weight: 600;
     }
 
-    .back {
-      background-color: #ccc;
-      padding: 8px 80px;
+         .back{
+      background-color: #000000;
+      color: #2da010;
+      padding: 8px 10px;
       font-size: 24px;
       font-weight: 800;
       display: flex;
       flex-direction: row;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
-      gap: 20px;
 
     }
-
-    .back i {
-      font-size: 50px;
-    }
+      .back i{
+        color: #2da010;
+        font-size: 50px;
+      }
     .mobile{
       background-color: #ccc;
       padding: 10px 30px;
     
     }
+       /* Center the modal vertically */
+  #checkoutModal .modal-dialog {
+    margin: 0% auto;
+    max-width: 500px;
+  }
 
-    @media screen and (max-width: 425px) {
+  /* Style the modal box */
+  #checkoutModal .modal-content {
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    background-color: #f9f9f9;
+  }
+
+  /* Header styling */
+  #checkoutModal h4 {
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  /* Input fields */
+  #checkoutModal input,
+  #checkoutModal textarea {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  /* Buttons */
+  #checkoutModal .btn-primary {
+    background-color: #2da010;
+    border-radius: 8px;
+  }
+
+  #checkoutModal .btn-secondary {
+     background-color:#f65005;
+    border-radius: 8px;
+  }
+#paymentDetails,#checkoutModal {
+  background-color: rgba(14, 13, 13, 0.9); /* white with 70% opacity */
+}
+
+
+    @media screen and (max-width: 430px) {
       .back {
-        background-color: #ccc;
+        background-color: #000000;
+        color: #2da010;
         padding: 8px 10px;
         font-size: 24px;
         font-weight: 800;
@@ -153,8 +196,10 @@
     .order-btn{
       margin: 0;
     }
+     
     }
   </style>
+
 </head>
 
 <body>
@@ -168,7 +213,7 @@
     <div id="cart-items"></div>
   </div>
   <!-- mobile -->
- <div class="row d-flex d-md-none align-items-center justify-content-end mt-3  fixed-bottom mobile">
+ <div class="row  d-md-none align-items-center justify-content-end mt-3  fixed-bottom mobile">
   <div class="col-6">
     <div class="total-mobile"> $<span id="total-mobile">0.00</span></div>
   </div>
@@ -184,6 +229,34 @@
   </div>
   <div class="col-6">
     <button class="order-btn w-100" onclick="placeOrder()">Place Order</button>
+  </div>
+</div>
+<!-- Step 1: Address Form -->
+<div id="checkoutModal" class="modal" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <h4>Enter Delivery Address</h4>
+      <input type="text" id="custName" placeholder="Full Name" class="form-control mb-2" />
+      <input type="text" id="custPhone" placeholder="Phone Number" class="form-control mb-2" />
+      <input type="text" id="custAltPhone" placeholder="Alternate Number" class="form-control mb-2" />
+      <input type="text" id="custPincode" placeholder="Pincode" class="form-control mb-2" />
+      <textarea id="custAddress" placeholder="Full Address" class="form-control mb-2"></textarea>
+      <input type="text" id="custState" placeholder="State" class="form-control mb-2" />
+      <input type="text" id="custDistrict" placeholder="District" class="form-control mb-2" />
+      <button class="btn btn-primary" onclick="saveAddressAndProceed()">Next</button>
+      <button class="btn btn-secondary mt-2" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+<!-- Step 2: Payment Details -->
+<div id="paymentDetails" class="modal" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <h4>Payment Details</h4>
+      <div id="paymentCard"></div>
+      <button class="btn btn-success mt-3" onclick="placeOrderFinal('ONLINE')">Pay Online</button>
+      <button class="btn btn-warning mt-2" onclick="placeOrderFinal('COD')">Cash on Delivery</button>
+    </div>
   </div>
 </div>
 
@@ -247,19 +320,171 @@ document.getElementById('total-desktop').textContent = total.toFixed(2);
       renderCart();
     }
 
-    function placeOrder() {
-      if (cart.length === 0) {
-        alert('Your cart is empty.');
-        return;
-      }
-
-      localStorage.removeItem('cart');
-      alert('🎉 Thank you! Your order has been placed.');
-      location.reload();
-    }
 
     renderCart();
+
+    // Step 1 → Start Order Process from Cart
+function placeOrder() {
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+
+  // Save all products into window.currentOrder
+  window.currentOrder = [...cart];
+
+  // Show address form modal first
+  document.getElementById("checkoutModal").style.display = "block";
+}
+
+// step-2 ----- saveAddressAndProceed() >
+function saveAddressAndProceed() {
+  const addressData = {
+    fullName: document.getElementById("custName").value,
+    phone: document.getElementById("custPhone").value,
+    altPhone: document.getElementById("custAltPhone").value,
+    pincode: document.getElementById("custPincode").value,
+    address: document.getElementById("custAddress").value,
+    state: document.getElementById("custState").value,
+    district: document.getElementById("custDistrict").value
+  };
+
+  if (!addressData.fullName || !addressData.phone || !addressData.address) {
+    alert("Please fill all required fields.");
+    return;
+  }
+
+  const token = localStorage.getItem("token");
+
+  // fetch("http://localhost:8080/admin/update-address", 
+   fetch("https://ecommerce-backend-wnu9.onrender.com/admin/update-address",
+  {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify(addressData)
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("Failed to save address");
+      return res.text();
+    })
+    .then(msg => {
+      console.log(msg);
+      document.getElementById("checkoutModal").style.display = "none";
+      showPaymentDetails();
+    })
+    .catch(err => alert("Error saving address: " + err.message));
+}
+
+// Step 3 – Show All Cart Products in Payment Details
+function showPaymentDetails() {
+  let totalAmount = 0;
+  let productListHTML = "";
+
+  window.currentOrder.forEach(item => {
+    const subtotal = item.price * item.quantity;
+    totalAmount += subtotal;
+    productListHTML += `
+      <p><strong>${item.name}</strong> (x${item.quantity}) - ₹${subtotal}</p>
+    `;
+  });
+
+  document.getElementById("paymentCard").innerHTML = `
+    <div class="card p-3">
+      ${productListHTML}
+      <p><strong>Total Amount:</strong> ₹${totalAmount}</p>
+    </div>
+  `;
+  document.getElementById("paymentDetails").style.display = "block";
+}
+
+// Step 4 – Place Order for All Products
+function placeOrderFinal(paymentType) {
+  let totalAmount = 0;
+  window.currentOrder.forEach(item => {
+    totalAmount += item.price * item.quantity;
+  });
+
+  if (paymentType === "COD") {
+    // Send whole order list to backend
+    // fetch("http://localhost:8080/api/orders/save-bulk",
+    fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders/save-bulk",
+     {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      body: JSON.stringify({
+        products: window.currentOrder,
+        paymentType: "COD",
+        status: "PENDING"
+      })
+    }).then(() => {
+      alert("Order placed successfully (COD)!");
+      localStorage.removeItem("cart"); // clear cart
+      closePayment();
+    });
+    return;
+  }
+
+  // Online Payment (Razorpay)
+  // fetch("http://localhost:8080/api/payment/create-order", 
+   fetch("https://ecommerce-backend-wnu9.onrender.com/api/payment/create-order",
+   {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ amount: totalAmount })
+  })
+    .then(res => res.json())
+    .then(orderData => {
+      const options = {
+        key: "rzp_test_qoebkgBWvtmZQw", //  Razorpay key
+        amount: orderData.amount,
+        currency: "INR",
+        name: "My Shop",
+        description: "Cart Order",
+        order_id: orderData.id,
+        handler: function (response) {
+          // fetch("http://localhost:8080/api/orders/save-bulk",
+          fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders/save-bulk",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            body: JSON.stringify({
+              products: window.currentOrder,
+              orderId: response.razorpay_order_id,
+              paymentId: response.razorpay_payment_id,
+              paymentType: "ONLINE",
+              status: "PAID"
+            })
+          }).then(() => {
+            alert("Order placed successfully!");
+            localStorage.removeItem("cart");
+            closePayment();
+          });
+        },
+        theme: { color: "#3399cc" }
+      };
+      new Razorpay(options).open();
+    });
+}
+function closeModal() {
+  document.getElementById("checkoutModal").style.display = "none";
+}
+
+function closePayment() {
+  document.getElementById("paymentDetails").style.display = "none";
+}
+
+
   </script>
+   
 </body>
 
 </html>

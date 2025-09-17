@@ -148,22 +148,22 @@
   <div class="nav-links d-md-none" id="navLinks">
 
     <!-- welcome username inmobile view -->
-   <div id="mobileProfile" style="display:none;">
-  <div id="profileCircleMobile" class="profile-circle"></div>
-  <h2 class="m-0 d-flex justify-content-center align-items-center gap-2">WELCOME <span id="usernameDisplayMobile"></span></h2>
-</div>
-
-    <a href="index.html" class="home" onclick="toggleMenu()">HOME</a>
-    <a class="nav-link" href="features.html">FEATURES</a>
-    <a class="nav-link" href="#">ABOUT</a>
-    <!-- Inside the mobile nav-links -->
-    <a id="adminLinkMobile" class="nav-link" href="admin.html" style="display: none;">ADMIN</a>
-    <!-- logout  -->
-   <a id="logoutMobile" class="nav-link" style="display: none;" >LOGOUT</a>
-    
-
-
+    <div id="mobileProfile" style="display:none;">
+    <div id="profileCircleMobile" class="profile-circle"></div>
+    <h2 class="m-0 d-flex justify-content-center align-items-center gap-2">WELCOME <span id="usernameDisplayMobile"></span></h2>
   </div>
+
+      <a href="index.html" class="home" onclick="toggleMenu()">HOME</a>
+      <a class="nav-link" href="features.html">FEATURES</a>
+      <a class="nav-link" href="#">ABOUT</a>
+      <!-- Inside the mobile nav-links -->
+      <a id="adminLinkMobile" class="nav-link" href="admin.html" style="display: none;">ADMIN</a>
+      <!-- logout  -->
+    <a id="logoutMobile" class="nav-link" style="display: none;" >LOGOUT</a>
+      
+
+
+    </div>
   <div class="container-fluid d-md-none d-block fixed-bottom border-top bottom-bar">
     <div class="row text-center">
       <div class="col py-2 active">
@@ -273,7 +273,7 @@
 
 
     <p class="heading  ps-4 m-0">Our Products</p>
-    <div class="row product-row px-4 ">
+    <div class="row product-row px-4 m-0">
       <!-- loader -->
        <div id="loader" class="d-flex justify-content-center align-items-center m-5">
          <div class="loader"></div>
@@ -502,8 +502,8 @@ async function logout(logoutBtn, logoutBtnMobile) {
   }
 
   try {
-    // const res = await fetch("http://localhost:8080/auth/logout",
-    const res = await fetch("https://ecommerce-backend-wnu9.onrender.com/auth/logout",
+     const res = await fetch("http://localhost:8080/auth/logout",
+    //const res = await fetch("https://ecommerce-backend-wnu9.onrender.com/auth/logout",
      {
       method: "POST",
       headers: { "Authorization": `Bearer ${token}` }

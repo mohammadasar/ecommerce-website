@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const fetchPromise = fetch('https://ecommerce-backend-wnu9.onrender.com/admin/products')
     .then(res => res.json());
 
-  const delayPromise = new Promise(resolve => setTimeout(resolve, 5000)); // ⏳ 5s delay
+  const delayPromise = new Promise(resolve => setTimeout(resolve, 3000)); // ⏳ 5s delay
 
   Promise.all([fetchPromise, delayPromise])
     .then(([products]) => {
@@ -209,17 +209,21 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      loader.style.display = "none"; // ✅ hide after 5s and fetch complete
+      loader.style.display = "none"; // ✅ hide after 3s and fetch complete
       container.innerHTML = ''; // clear any loader inside
+
+       // 👉 Show only first 10 products on index page
+      const limitedProducts = products.slice(0, 3);
+
 // <img src="http://localhost:8080${product.imageUrl}" alt="${product.name}">
 //<img src="${product.imageUrl}" alt="${product.name}"></img>
-      products.forEach((product, index) => {
+      limitedProducts.forEach((product, index) => {
         const html = `
           <div class="col-6 col-md-4 d-flex justify-content-center mt-md-3 mt-4">
             <div class="product-card" onclick="viewDetails('${product.title}', ${product.price}, 'qty-${index}', '${product.description}')">
               <div class="product-image">
                 
-                <img src="${product.imageUrl}" alt="${product.name}"></img>
+              <img src="${product.imageUrl}" alt="${product.name}"></img>
                 <div class="like-icon" onclick="event.stopPropagation(); toggleLike(this, '${product.title}', ${product.price}, 'qty-${index}', '${product.imageUrl}', '${product.description}')">
                   <i class='bx bx-heart'></i>
                 </div>
@@ -258,6 +262,13 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
         `;
         container.insertAdjacentHTML('beforeend', html);
+  
+      });
+
+        // 👉 Setup "Browse More Products" button
+      const browseBtn = document.querySelector(".product-btn button");
+      browseBtn.addEventListener("click", () => {
+        window.location.href = "all-products.html"; // redirect to all products page
       });
     })
     .catch(err => {

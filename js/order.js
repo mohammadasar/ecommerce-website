@@ -1,210 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <link href="css/index.css" rel="stylesheet">
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+// order process ------>
 
-  <title>Product Details</title>
-  <style>
-    .product-detail {
-      /* border: 1px solid #ccc; */
-      padding: 15px 20px;
-      margin-top: 20px;
-      /* border-radius: 10px; */
-    }
-    .btn {
-      margin-top: 10px;
-    }
-    .product-detail img{
-      width: 100%;
-      border-radius: 10px;
-    }
-     .bottom-option{
-      background-color: #ccc;
-      padding: 8px;
-     }
-    .bottom-option .btn{
-      width: 47%;
-      padding: 15px 0px;
-      border: 1px solid black;
-      border-radius: 10px;
-      font-size: 20px;
-      font-weight: 600;
-    }
-    .bottom-option .buy-btn{
-      border: 1px solid #2da010;
-      background-color: #2da010;
-      color: #ccc;
-    }
-    .bottom-option .add-btn{
-      border: 1px solid #f65005;
-      background-color: #f65005;
-      color: #ccc;
-    }
-    .product-detail  h3{
-      font-size: 4rem;
-    }
-    .product-detail  p{
-      font-size: 2rem;
-    }
-    .back{
-      background-color: #000000;
-      color: #2da010;
-      padding: 8px 10px;
-      font-size: 24px;
-      font-weight: 800;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-
-    }
-      .back i{
-        color: #2da010;
-        font-size: 50px;
-      }
-    #checkoutModal {
-      background-color: #333;
-    }
-    #paymentDetails{
-      background-color: #333;
-    }
-    #paymentDetails .modal-dialog{
-      margin: 10% auto;
-    }
-      /* Center the modal vertically */
-  #checkoutModal .modal-dialog {
-    margin: 0% auto;
-    max-width: 500px;
-  }
-
-  /* Style the modal box */
-  #checkoutModal .modal-content {
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-    background-color: #f9f9f9;
-  }
-
-  /* Header styling */
-  #checkoutModal h4 {
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #333;
-  }
-
-  /* Input fields */
-  #checkoutModal input,
-  #checkoutModal textarea {
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    padding: 10px;
-  }
-
-  /* Buttons */
-  #checkoutModal .btn-primary {
-    background-color: #2da010;
-    border-radius: 8px;
-  }
-
-  #checkoutModal .btn-secondary {
-     background-color:#f65005;
-    border-radius: 8px;
-  }
-    @media screen and (max-width: 430px) {
-      .card-row{
-        height: 100vh;
-        margin-bottom: 200px;
-      }
-      .product-detail  h3{
-      font-size: 2rem;
-    }
-    .product-detail  p{
-      font-size: 1.3rem;
-    }
-    .back{
-      background-color: #000000;
-      color: #2da010;
-      padding: 8px 10px;
-      font-size: 24px;
-      font-weight: 800;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-
-    }
-    .product-detail {
-      position: relative;
-      padding: 15px 20px;
-      margin-top: 70px;
-      
-      
-    }
-   
-     .bottom-option .btn{
-      width: 47%;
-      padding: 10px 0px;
-      border-radius: 12px;
-      font-size: 18px;
-      font-weight: 600;
-    }
-    
-    }
-
-  </style>
-</head>
-<body>
-  <div class="back fixed-top">
-    <a href="#" onclick="goBack()" class="text-dark text-decoration-none">
-      <i class='bx bx-arrow-back'></i>
-      </a> Back to Products
-  </div>
-  
-  <div class="product-detail mt-5" id="product-detail"></div>
-  <div class="bottom-option d-md-none d-block fixed-bottom" id="bottom-option-mobile"></div>
-
-  <!-- HTML: Hidden Address Form -->
-<!-- Step 1: Address Form -->
-<div id="checkoutModal" class="modal" style="display:none;">
-  <div class="modal-dialog">
-    <div class="modal-content p-3">
-      <h4>Enter Delivery Address</h4>
-      <input type="text" id="custName" placeholder="Full Name" class="form-control mb-2" />
-      <input type="text" id="custPhone" placeholder="Phone Number" class="form-control mb-2" />
-      <input type="text" id="custAltPhone" placeholder="Alternate Number" class="form-control mb-2" />
-      <input type="text" id="custPincode" placeholder="Pincode" class="form-control mb-2" />
-      <textarea id="custAddress" placeholder="Full Address" class="form-control mb-2"></textarea>
-      <input type="text" id="custState" placeholder="State" class="form-control mb-2" />
-      <input type="text" id="custDistrict" placeholder="District" class="form-control mb-2" />
-      <button class="btn btn-primary" onclick="saveAddressAndProceed()">Next</button>
-      <button class="btn btn-secondary mt-2" onclick="closeModal()">Cancel</button>
-    </div>
-  </div>
-</div>
-
-<!-- Step 2: Payment Details -->
-<div id="paymentDetails" class="modal" style="display:none;">
-  <div class="modal-dialog">
-    <div class="modal-content p-3">
-      <h4>Payment Details</h4>
-      <div id="paymentCard"></div>
-      <button class="btn btn-success mt-3" onclick="placeOrderFinal('ONLINE')">Pay Online</button>
-      <button class="btn btn-warning mt-2" onclick="placeOrderFinal('COD')">Cash on Delivery</button>
-    </div>
-  </div>
-</div>
-
-
-
-  
-
-  <!-- <script>
-
-    const params = new URLSearchParams(window.location.search);
+const params = new URLSearchParams(window.location.search);
 const name = decodeURIComponent(params.get('name'));
 const price = params.get('price');
 const description = decodeURIComponent(params.get('description'));
@@ -292,8 +88,8 @@ function saveAddressAndProceed() {
   // Save in DB
 const token = localStorage.getItem("token");
 
-fetch("http://localhost:8080/admin/update-address", 
-// fetch("https://ecommerce-backend-wnu9.onrender.com/admin/update-address",
+// fetch("http://localhost:8080/admin/update-address", 
+fetch("https://ecommerce-backend-wnu9.onrender.com/admin/update-address",
 {
   method: "PUT",
   headers: {
@@ -333,8 +129,8 @@ function placeOrderFinal(paymentType) {
   const totalAmount = price * qty;
 
   if (paymentType === "COD") {
-    fetch("http://localhost:8080/api/orders/save",
-    // fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders/save",
+    // fetch("http://localhost:8080/api/orders/save",
+    fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders/save",
      {
       method: "POST",
       headers: {
@@ -357,8 +153,8 @@ function placeOrderFinal(paymentType) {
   }
 
   // Razorpay Online Payment
-  fetch("http://localhost:8080/api/payment/create-order",
-  // fetch("https://ecommerce-backend-wnu9.onrender.com/api/payment/create-order",
+  // fetch("http://localhost:8080/api/payment/create-order",
+  fetch("https://ecommerce-backend-wnu9.onrender.com/api/payment/create-order",
     {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -374,8 +170,8 @@ function placeOrderFinal(paymentType) {
       description: name,
       order_id: orderData.id,
       handler: function (response) {
-        fetch("http://localhost:8080/api/orders/save",
-        // fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders/save", 
+        // fetch("http://localhost:8080/api/orders/save",
+        fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders/save", 
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -434,10 +230,3 @@ function closeModal() {
       window.location.href = "index.html";
     }
   }
-  </script> -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-  <script src="js/index.js" ></script>
-   <script src="js/order.js" ></script>
-</body>
-</html>
