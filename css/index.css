@@ -1076,7 +1076,6 @@ button:active {
   padding: 8px;
   transition: background 0.2s ease;
 }
-
 .nav-links a:hover {
   background-color: #f0f0f0;
 }

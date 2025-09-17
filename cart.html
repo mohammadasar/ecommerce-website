@@ -443,7 +443,7 @@ function placeOrderFinal(paymentType) {
     .then(res => res.json())
     .then(orderData => {
       const options = {
-        key: "", //  Razorpay key
+        key: "rzp_test_qoebkgBWvtmZQw", //  Razorpay key
         amount: orderData.amount,
         currency: "INR",
         name: "My Shop",
