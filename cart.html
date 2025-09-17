@@ -425,6 +425,8 @@ function placeOrderFinal(paymentType) {
     }).then(() => {
       alert("Order placed successfully (COD)!");
       localStorage.removeItem("cart"); // clear cart
+    cart = [];                        // ✅ Reset array
+    renderCart();                     // ✅ Refresh UI
       closePayment();
     });
     return;
@@ -441,7 +443,7 @@ function placeOrderFinal(paymentType) {
     .then(res => res.json())
     .then(orderData => {
       const options = {
-        key: "rzp_test_qoebkgBWvtmZQw", //  Razorpay key
+        key: "", //  Razorpay key
         amount: orderData.amount,
         currency: "INR",
         name: "My Shop",
@@ -466,6 +468,8 @@ function placeOrderFinal(paymentType) {
           }).then(() => {
             alert("Order placed successfully!");
             localStorage.removeItem("cart");
+             cart = [];                        // ✅ Reset array
+             renderCart();                     // ✅ Refresh UI
             closePayment();
           });
         },
