@@ -88,8 +88,8 @@ function saveAddressAndProceed() {
   // Save in DB
 const token = localStorage.getItem("token");
 
-// fetch("http://localhost:8080/admin/update-address", 
-fetch("https://ecommerce-backend-wnu9.onrender.com/admin/update-address",
+fetch("http://localhost:8080/admin/update-address", 
+// fetch("https://ecommerce-backend-wnu9.onrender.com/admin/update-address",
 {
   method: "PUT",
   headers: {
@@ -129,8 +129,8 @@ function placeOrderFinal(paymentType) {
   const totalAmount = price * qty;
 
   if (paymentType === "COD") {
-    // fetch("http://localhost:8080/api/orders/save",
-    fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders/save",
+    fetch("http://localhost:8080/api/orders/save",
+    // fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders/save",
      {
       method: "POST",
       headers: {
@@ -153,8 +153,8 @@ function placeOrderFinal(paymentType) {
   }
 
   // Razorpay Online Payment
-  // fetch("http://localhost:8080/api/payment/create-order",
-  fetch("https://ecommerce-backend-wnu9.onrender.com/api/payment/create-order",
+  fetch("http://localhost:8080/api/payment/create-order",
+  // fetch("https://ecommerce-backend-wnu9.onrender.com/api/payment/create-order",
     {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -170,11 +170,14 @@ function placeOrderFinal(paymentType) {
       description: name,
       order_id: orderData.id,
       handler: function (response) {
-        // fetch("http://localhost:8080/api/orders/save",
-        fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders/save", 
+        fetch("http://localhost:8080/api/orders/save",
+        // fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders/save", 
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+           headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("token") // your JWT token
+    },
           body: JSON.stringify({
             productName: name,
             price: price,

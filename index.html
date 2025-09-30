@@ -38,14 +38,26 @@
           info@example.com</span>
 
       </div>
-      <div class="col-6 d-flex gap-3 px-5 justify-content-end align-items-center social-icons ">
-        <span style="font-size: 18px;font-weight: 500">Follow us :</span>
-        <span><i class='bx bxl-instagram'></i></span>
-        <span><i class='bx bxl-facebook'></i></span>
-        <span><i class='bx bxl-whatsapp'></i></span>
-        <span><i class='bx bxl-youtube'></i></span>
-      </div>
-    </div>
+      <div class="col-6 d-flex gap-3 px-5 justify-content-end align-items-center social-icons">
+  <span style="font-size: 18px; font-weight: 500">Follow us :</span>
+
+  <a href="https://www.instagram.com/devwerx/?next=%2F" target="_blank">
+    <i class='bx bxl-instagram'></i>
+  </a>
+
+  <a href="https://www.facebook.com/profile.php?id=61574186870468" target="_blank">
+    <i class='bx bxl-facebook'></i>
+  </a>
+
+  <a href="https://wa.me/yourwhatsapplink" target="_blank">
+    <i class='bx bxl-whatsapp'></i>
+  </a>
+
+  <a href="https://youtube.com/yourchannel" target="_blank">
+    <i class='bx bxl-youtube'></i>
+  </a>
+</div>
+
     <!-- welcome to username on website -->
    <div class="welcomename ps-5" style="display:none;">
   <h2 class="m-0">WELCOME <span id="usernameDisplay" class="ms-1"></span></h2>
@@ -386,7 +398,7 @@
         <P class="footer-para mt-4">Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et
           sit, sed stet lorem sit clita</P>
         <div class="footer-icons">
-          <a href=""><i class='bx bxl-facebook'></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61574186870468"><i class='bx bxl-facebook'></i></a>
           <a href=""><i class='bx bxl-whatsapp'></i></a>
           <a href=""><i class='bx bxl-youtube'></i></a>
           <a href=""><i class='bx bxl-linkedin'></i></a>
@@ -502,8 +514,8 @@ async function logout(logoutBtn, logoutBtnMobile) {
   }
 
   try {
-    //  const res = await fetch("http://localhost:8080/auth/logout",
-    const res = await fetch("https://ecommerce-backend-wnu9.onrender.com/auth/logout",
+     const res = await fetch("http://localhost:8080/auth/logout",
+    // const res = await fetch("https://ecommerce-backend-wnu9.onrender.com/auth/logout",
      {
       method: "POST",
       headers: { "Authorization": `Bearer ${token}` }

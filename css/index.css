@@ -11,8 +11,11 @@ body{
     transform: scale(1.2);
     color: #3CB815; /* Change this to the hover color you like */
   }
-.social-icons span {
-    font-size: 18px;
+
+.social-icons a{
+  text-decoration: none;
+  color: #090909;
+  font-size: 18px;
     display: flex;
     align-items: center;
 }

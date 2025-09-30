@@ -153,6 +153,7 @@
                 <li><a href="index.html">HOME</a></li>
                 <li><a href="#" id="homeBtn">DASHBOARD</a></li>
                 <li><a href="#" id="productUploadBtn">ProductUploader</a></li>
+                 <li><a href="#" id="salesReport">SalesReport</a></li>
                 <li><a href="#" id="UserInfoBtn">UserInfo</a></li>
                 <li><a href="#" id="postUploadBtn">invoice</a></li> 
 
@@ -172,6 +173,7 @@
 const homeBtn = document.getElementById('homeBtn');
 const packageUploadBtn = document.getElementById('productUploadBtn');
 const videoUploadBtn = document.getElementById('UserInfoBtn');
+const salesReportBtn = document.getElementById('salesReport');
 const contentFrame = document.getElementById('contentFrame');
 const postUploadBtn = document.getElementById('postUploadBtn'); 
 const pageTitle = document.getElementById('pageTitle');
@@ -195,6 +197,11 @@ function updatePage(page) {
      // Handle Post Upload
         contentFrame.src = 'invoice.html';  // Load post upload page
         pageTitle.innerText = 'Post Upload';
+    }
+     else if (page === 'sales_report') { 
+     // Handle Post Upload
+        contentFrame.src = 'report.html';  // Load post upload page
+        pageTitle.innerText = 'Sales Report';
     }
 }
 
@@ -232,6 +239,11 @@ videoUploadBtn.addEventListener('click', function () {
 postUploadBtn.addEventListener('click', function () {
     window.history.pushState(null, '', '?page=post_upload');
     updatePage('post_upload');
+    closeSidebar();
+});
+salesReportBtn.addEventListener('click', function () {
+    window.history.pushState(null, '', '?page=sales_report');
+    updatePage('sales_report');
     closeSidebar();
 });
 
