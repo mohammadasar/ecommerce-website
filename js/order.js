@@ -102,10 +102,14 @@ fetch("https://ecommerce-backend-wnu9.onrender.com/admin/update-address",
     if (!res.ok) throw new Error("Failed to save address");
     return res.text();
   })
-  .then(msg => console.log(msg))
+  .then(msg => {
+   console.log(msg);
+   document.getElementById("checkoutModal").style.display = "none";
+   showPaymentDetails();
+})
+
   .catch(err => alert("Error saving address: " + err.message));
-  document.getElementById("checkoutModal").style.display = "none";
- showPaymentDetails()
+  
 }
 
 // Step 2 → Show Payment Details Card
