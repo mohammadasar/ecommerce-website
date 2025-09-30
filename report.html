@@ -103,7 +103,8 @@
       const startDate = document.getElementById("startDate").value + "T00:00:00";
       const endDate = document.getElementById("endDate").value + "T23:59:59";
 
-      const res = await fetch(`http://localhost:8080/api/orders/sales?startDate=${startDate}&endDate=${endDate}`);
+      // const res = await fetch(`http://localhost:8080/api/orders/sales?startDate=${startDate}&endDate=${endDate}`);
+      const res = await fetch(`https://ecommerce-backend-wnu9.onrender.com/api/orders/sales?startDate=${startDate}&endDate=${endDate}`);
       reportData = await res.json();
 
       document.getElementById("reportResult").innerHTML = `

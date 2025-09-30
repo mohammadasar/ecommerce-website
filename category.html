@@ -74,8 +74,8 @@
       const category = urlParams.get("name");
       document.getElementById("categoryTitle").innerText = "Products in " + category;
 
-      const response = await fetch(`http://localhost:8080/admin/category/${category}`);
-      // const response = await fetch(`https://ecommerce-backend-wnu9.onrender.com/admin/category/${category}`);
+      // const response = await fetch(`http://localhost:8080/admin/category/${category}`);
+      const response = await fetch(`https://ecommerce-backend-wnu9.onrender.com/admin/category/${category}`);
       const products = await response.json();
 
       const container = document.getElementById("productList");
@@ -91,7 +91,7 @@
             <div class="product-card" onclick="viewDetails('${product.title}', ${product.price}, 'qty-${index}', '${product.description}')">
               <div class="product-image">
                 
-                 <img src="http://localhost:8080${product.imageUrl}" alt="${product.name}">
+                 <img src="${product.imageUrl}" alt="${product.name}"></img>
                 <div class="like-icon" onclick="event.stopPropagation(); toggleLike(this, '${product.title}', ${product.price}, 'qty-${index}', '${product.imageUrl}', '${product.description}')">
                   <i class='bx bx-heart'></i>
                 </div>
