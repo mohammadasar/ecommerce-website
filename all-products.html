@@ -79,8 +79,8 @@
   const container = document.querySelector('.product-row');
 
   // Start both fetch and timer at the same time
-  const fetchPromise = fetch('http://localhost:8080/admin/products')
-  // const fetchPromise = fetch('https://ecommerce-backend-wnu9.onrender.com/admin/products')
+  // const fetchPromise = fetch('http://localhost:8080/admin/products')
+  const fetchPromise = fetch('https://ecommerce-backend-wnu9.onrender.com/admin/products')
     .then(res => res.json());
 
   const delayPromise = new Promise(resolve => setTimeout(resolve, 2000)); // ⏳ 5s delay

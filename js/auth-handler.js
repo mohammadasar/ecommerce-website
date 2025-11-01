@@ -246,6 +246,7 @@ if (usernameLoginInput && passwordLoginInput && loginBtn && loginForm) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
+          credentials: 'include' // important to send and receive cookies
       });
 
       const data = await res.json();
@@ -311,11 +312,11 @@ async function logout() {
   localStorage.removeItem("username");
 
   // Redirect
-  window.location.href = "login.html";
+  window.location.href = "signin.html";
 }
 
 
-
+// this is testing part -------->
 
 
 

@@ -411,8 +411,8 @@ function placeOrderFinal(paymentType) {
 
   if (paymentType === "COD") {
     // Send whole order list to backend
-    fetch("http://localhost:8080/api/orders/save-bulk",
-    // fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders/save-bulk",
+    // fetch("http://localhost:8080/api/orders/save-bulk",
+    fetch("https://ecommerce-backend-wnu9.onrender.com/api/orders/save-bulk",
      {
       method: "POST",
       headers: {

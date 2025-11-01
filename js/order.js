@@ -11,15 +11,15 @@ if (name && price && image && quantity && description) {
   const container = document.getElementById('product-detail');
   container.innerHTML = `
     <div class="row card-row ">
-      <div class="col-12 col-md-6 position-relative p-0">
+      <div class="col-12 col-md-6 position-relative p-0 d-flex justify-content-center">
         <img src="${image}" alt="${name}"><br>
         <div class="like-icon">
           <i class='bx bx-heart'></i>
         </div>
       </div>
-      <div class="col-12 col-md-6   d-flex flex-column justify-content-between">
-        <div>
-        <h3 class="px-3 px-md-5" >${name}</h3>
+      <div class="col-12 col-md-6  d-flex flex-column justify-content-between">
+        <div class="px-3 px-md-5">
+        <h3 class="px-3 px-md-5 pt-0 pt-md-5" >${name}</h3>
         <p class="px-3 px-md-5">${description}</p>
         <p class="mt-3 px-3 px-md-5"><strong>Price:</strong> $${price}</p>
         <label class="px-3 px-md-5"><strong>Quantity:</strong>
@@ -33,7 +33,7 @@ if (name && price && image && quantity && description) {
 
   const container1 = document.getElementById('bottom-option-desk');
   container1.innerHTML = `
-    <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column border">
       <button class="btn add-btn" onclick="addToCart('${name}', ${price}, 'qty-input', '${image}')">Add to Cart</button>
       <button class="btn buy-btn" onclick="buyNow('${name}', ${price}, 'qty-input')">Buy Now</button>
     </div>

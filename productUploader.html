@@ -111,12 +111,12 @@
     e.preventDefault();
 
     const formData = new FormData(form);
-    // const url = editingProductId
-    //   ? `http://localhost:8080/admin/products/${editingProductId}`
-    //   : 'http://localhost:8080/admin/upload';
-      const url = editingProductId
-      ? `https://ecommerce-backend-wnu9.onrender.com/admin/products/${editingProductId}`
-      : 'https://ecommerce-backend-wnu9.onrender.com/admin/upload';
+    const url = editingProductId
+      ? `http://localhost:8080/admin/products/${editingProductId}`
+      : 'http://localhost:8080/admin/upload';
+      // const url = editingProductId
+      // ? `https://ecommerce-backend-wnu9.onrender.com/admin/products/${editingProductId}`
+      // : 'https://ecommerce-backend-wnu9.onrender.com/admin/upload';
 
     const method = editingProductId ? 'PUT' : 'POST';
 
@@ -137,8 +137,8 @@
   });
 
   async function loadProducts() {
-    // const res = await fetch('http://localhost:8080/admin/products');
-    const res = await fetch('https://ecommerce-backend-wnu9.onrender.com/admin/products');
+    const res = await fetch('http://localhost:8080/admin/products');
+    // const res = await fetch('https://ecommerce-backend-wnu9.onrender.com/admin/products');
 
     const products = await res.json();
     productList.innerHTML = '';
@@ -184,8 +184,8 @@ products.forEach(p => {
 
   async function deleteProduct(id) {
     if (!confirm("Are you sure you want to delete this product?")) return;
-    // const res = await fetch(`http://localhost:8080/admin/products/${id}`
-    const res = await fetch(`https://ecommerce-backend-wnu9.onrender.com/admin/products/${id}`
+    const res = await fetch(`http://localhost:8080/admin/products/${id}`
+    // const res = await fetch(`https://ecommerce-backend-wnu9.onrender.com/admin/products/${id}`
     , {
       method: 'DELETE'
     });

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <link href="css/index.css" rel="stylesheet">
+  <!-- <link href="css/index.css" rel="stylesheet"> -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <title>Product Details</title>
@@ -13,18 +13,41 @@
     .product-detail {
       /* border: 1px solid #ccc; */
       padding: 15px 20px;
-      margin-top: 20px;
+      margin-top: 80px;
       /* border-radius: 10px; */
     }
     .btn {
       margin-top: 10px;
     }
+  .like-icon {
+  position: absolute;
+  top: 10px;
+  right: 140px;
+  background: white;
+  border-radius: 50%;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.like-icon i{
+  color: #f43f5e;
+  font-size: 24px;
+}
+.like-icon:hover {
+  background: #fce7f3;
+}
     .product-detail img{
-      width: 100%;
+      width: 80%;
       border-radius: 10px;
     }
      .bottom-option{
-      background-color: #ccc;
+      /* background-color: #ccc; */
       padding: 8px;
      }
     .bottom-option .btn{
@@ -36,11 +59,13 @@
       font-weight: 600;
     }
     .bottom-option .buy-btn{
+      width: 100%;
       border: 1px solid #2da010;
       background-color: #2da010;
       color: #ccc;
     }
     .bottom-option .add-btn{
+       width: 100%;
       border: 1px solid #f65005;
       background-color: #f65005;
       color: #ccc;
@@ -115,12 +140,22 @@
     border-radius: 8px;
   }
     @media screen and (max-width: 430px) {
+
+      .product-detail {
+      margin-top: 120px;
+      
+    }
+    .bottom-option{
+      background-color:  #262525;
+      padding: 8px;
+     }
       .card-row{
-        height: 100vh;
-        margin-bottom: 200px;
+        height: auto;
+        margin-bottom: 100px;
       }
       .product-detail  h3{
       font-size: 2rem;
+      margin-top: 15px;
     }
     .product-detail  p{
       font-size: 1.3rem;
@@ -152,6 +187,34 @@
       font-size: 18px;
       font-weight: 600;
     }
+    .like-icon {
+  position: absolute;
+  top: 10px;
+  right: 50px;
+  border-radius: 50%;
+  padding: 12px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.like-icon i{
+  color: #f43f5e;
+  font-size: 18px;
+}
+  .bottom-option .buy-btn{
+      
+       border: 1.5px solid #fff;
+      background-color: #2da010;
+      color: #fff;
+    }
+    .bottom-option .add-btn{
+       
+      border: 1.5px solid #fff;
+      background-color: #f65005;
+      color:  #fff;
+    }
     
     }
 
@@ -164,7 +227,7 @@
       </a> Back to Products
   </div>
   
-  <div class="product-detail mt-5" id="product-detail"></div>
+  <div class="product-detail " id="product-detail"></div>
   <div class="bottom-option d-md-none d-block fixed-bottom" id="bottom-option-mobile"></div>
 
   <!-- HTML: Hidden Address Form -->
