@@ -18,11 +18,11 @@ if (name && price && image && quantity && description) {
         </div>
       </div>
       <div class="col-12 col-md-6  d-flex flex-column justify-content-between">
-        <div class="px-3 px-md-5">
-        <h3 class="px-3 px-md-5 pt-0 pt-md-5" >${name}</h3>
-        <p class="px-3 px-md-5">${description}</p>
-        <p class="mt-3 px-3 px-md-5"><strong>Price:</strong> $${price}</p>
-        <label class="px-3 px-md-5"><strong>Quantity:</strong>
+        <div class="px-3 ">
+        <h3 class="px-3 pt-0 pt-md-5" >${name}</h3>
+        <p class="px-3 ">${description}</p>
+        <p class="mt-3 px-3 "><strong>Price:</strong> $${price}</p>
+        <label class="px-3 "><strong>Quantity:</strong>
           <input type="number" id="qty-input" value="${quantity}" min="1">
         </label><br>
         </div>
@@ -33,7 +33,7 @@ if (name && price && image && quantity && description) {
 
   const container1 = document.getElementById('bottom-option-desk');
   container1.innerHTML = `
-    <div class="d-flex flex-column border">
+    <div class="d-flex flex-column ">
       <button class="btn add-btn" onclick="addToCart('${name}', ${price}, 'qty-input', '${image}')">Add to Cart</button>
       <button class="btn buy-btn" onclick="buyNow('${name}', ${price}, 'qty-input')">Buy Now</button>
     </div>
@@ -65,9 +65,54 @@ function buyNow(productName, price, qtyInputId) {
 
   // Show address form first
   document.getElementById("checkoutModal").style.display = "block";
+   
+  loadSavedAddress();
 }
 
 // Step 1 → Save Address to DB
+// function saveAddressAndProceed() {
+//   const addressData = {
+//     fullName: document.getElementById("custName").value,
+//     phone: document.getElementById("custPhone").value,
+//     altPhone: document.getElementById("custAltPhone").value,
+//     pincode: document.getElementById("custPincode").value,
+//     address: document.getElementById("custAddress").value,
+//     state: document.getElementById("custState").value,
+//     district: document.getElementById("custDistrict").value
+//   };
+
+//   // Basic validation
+//   if (!addressData.fullName || !addressData.phone || !addressData.address) {
+//     alert("Please fill all required fields.");
+//     return;
+//   }
+
+//   // Save in DB
+// const token = localStorage.getItem("token");
+
+// fetch("http://localhost:8080/admin/update-address", 
+// // fetch("https://ecommerce-backend-wnu9.onrender.com/admin/update-address",
+// {
+//   method: "PUT",
+//   headers: {
+//     "Content-Type": "application/json",
+//     "Authorization": `Bearer ${token}`
+//   },
+//   body: JSON.stringify(addressData)
+// })
+//   .then(res => {
+//     if (!res.ok) throw new Error("Failed to save address");
+//     return res.text();
+//   })
+//   .then(msg => {
+//    console.log(msg);
+//    document.getElementById("checkoutModal").style.display = "none";
+//    showPaymentDetails();
+// })
+
+//   .catch(err => alert("Error saving address: " + err.message));
+  
+// }
 function saveAddressAndProceed() {
   const addressData = {
     fullName: document.getElementById("custName").value,
@@ -79,38 +124,63 @@ function saveAddressAndProceed() {
     district: document.getElementById("custDistrict").value
   };
 
-  // Basic validation
-  if (!addressData.fullName || !addressData.phone || !addressData.address) {
-    alert("Please fill all required fields.");
-    return;
-  }
+  const token = localStorage.getItem("token");
 
-  // Save in DB
-const token = localStorage.getItem("token");
-
-// fetch("http://localhost:8080/admin/update-address", 
-fetch("https://ecommerce-backend-wnu9.onrender.com/admin/update-address",
-{
-  method: "PUT",
-  headers: {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${token}`
-  },
-  body: JSON.stringify(addressData)
-})
-  .then(res => {
-    if (!res.ok) throw new Error("Failed to save address");
-    return res.text();
+  // fetch("http://localhost:8080/admin/update-address", 
+  fetch("https://ecommerce-backend-wnu9.onrender.com/admin/update-address",
+    {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify(addressData)
   })
-  .then(msg => {
-   console.log(msg);
-   document.getElementById("checkoutModal").style.display = "none";
-   showPaymentDetails();
-})
-
-  .catch(err => alert("Error saving address: " + err.message));
-  
+    .then(res => res.text())
+    .then(() => {
+      document.getElementById("checkoutModal").style.display = "none";
+      showPaymentDetails();
+    });
 }
+
+
+function loadSavedAddress() {
+  const token = localStorage.getItem("token");
+
+  // fetch("http://localhost:8080/admin/user/address", 
+  fetch("https://ecommerce-backend-wnu9.onrender.com/admin/user/address",
+    {
+    method: "GET",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  })
+    .then(res => {
+      if (!res.ok) return null;
+      return res.json();
+    })
+    .then(address => {
+      if (address && address.fullName) {
+        // Show saved address box
+        document.getElementById("savedAddressBox").style.display = "block";
+        document.getElementById("addressForm").style.display = "none";
+
+        document.getElementById("savedAddressText").innerHTML = `
+          <strong>${address.fullName}</strong><br>
+          ${address.phone}, ${address.altPhone}<br>
+          ${address.address}, ${address.district}, ${address.state}<br>
+          Pincode: ${address.pincode}
+        `;
+      }
+    })
+    .catch(err => console.log(err));
+}
+
+function showUpdateForm() {
+  document.getElementById("savedAddressBox").style.display = "none";
+  document.getElementById("addressForm").style.display = "block";
+}
+
 
 // Step 2 → Show Payment Details Card
 function showPaymentDetails() {
@@ -126,6 +196,10 @@ function showPaymentDetails() {
   `;
   document.getElementById("paymentDetails").style.display = "block";
 }
+function closePaymentPopup() {
+    document.getElementById("paymentDetails").style.display = "none";
+}
+
 
 // Step 3 → Place Order
 function placeOrderFinal(paymentType) {

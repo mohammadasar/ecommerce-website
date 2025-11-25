@@ -232,7 +232,7 @@
 
   <!-- HTML: Hidden Address Form -->
 <!-- Step 1: Address Form -->
-<div id="checkoutModal" class="modal" style="display:none;">
+<!-- <div id="checkoutModal" class="modal" style="display:none;">
   <div class="modal-dialog">
     <div class="modal-content p-3">
       <h4>Enter Delivery Address</h4>
@@ -247,10 +247,10 @@
       <button class="btn btn-secondary mt-2" onclick="closeModal()">Cancel</button>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Step 2: Payment Details -->
-<div id="paymentDetails" class="modal" style="display:none;">
+<!-- <div id="paymentDetails" class="modal" style="display:none;">
   <div class="modal-dialog">
     <div class="modal-content p-3">
       <h4>Payment Details</h4>
@@ -259,11 +259,65 @@
       <button class="btn btn-warning mt-2" onclick="placeOrderFinal('COD')">Cash on Delivery</button>
     </div>
   </div>
+</div> -->
+<div id="paymentDetails" class="modal" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content position-relative p-3">
+
+      <!-- Close Button (Bootstrap style) -->
+      <button type="button" class="btn-close" 
+              style="position:absolute; top:10px; right:10px;"
+              onclick="closePaymentPopup()">
+      </button>
+
+      <h4>Payment Details</h4>
+      <div id="paymentCard"></div>
+
+      <button class="btn btn-success mt-3" onclick="placeOrderFinal('ONLINE')">Pay Online</button>
+      <button class="btn btn-warning mt-2" onclick="placeOrderFinal('COD')">Cash on Delivery</button>
+
+    </div>
+  </div>
 </div>
 
 
+<!-- checking-------------- -->
 
-  
+ <!-- Step 1: Address Form -->
+<div id="checkoutModal" class="modal" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+
+      <h4>Delivery Address</h4>
+
+      <!-- Saved address display -->
+      <div id="savedAddressBox" style="display:none;" class="p-2 border mb-3 rounded">
+        <h5>Saved Address</h5>
+        <p id="savedAddressText"></p>
+        <button class="btn btn-primary" onclick="saveAddressAndProceed()">Use This Address</button>
+        <button class="btn btn-secondary mt-2" onclick="showUpdateForm()">Update Address</button>
+      </div>
+
+      <!-- Address form -->
+      <div id="addressForm">
+        <input type="text" id="custName" placeholder="Full Name" class="form-control mb-2" />
+        <input type="text" id="custPhone" placeholder="WhatsApp Number" class="form-control mb-2" />
+        <input type="text" id="custAltPhone" placeholder="Alternate Number" class="form-control mb-2" />
+        <input type="text" id="custPincode" placeholder="Pincode" class="form-control mb-2" />
+        <textarea id="custAddress" placeholder="Full Address" class="form-control mb-2"></textarea>
+        <input type="text" id="custState" placeholder="State" class="form-control mb-2" />
+        <input type="text" id="custDistrict" placeholder="District" class="form-control mb-2" />
+        
+      </div>
+         <button class="btn btn-primary" onclick="saveAddressAndProceed()" >Save & Next</button>
+         <button class="btn btn-danger mt-3" onclick="closeModal()">Cancel</button>
+
+     
+
+    </div>
+  </div>
+</div>
+ 
 
   <!-- <script>
 
